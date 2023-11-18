@@ -23,13 +23,24 @@ const HomePage = () => {
   const highscoreButton=document.querySelector('#scoresButton');
   const loginButton=document.querySelector('#loginButton');
   const signinButton=document.querySelector('#signinButton');
-
+  // getCatioContainer and image
+  const catioContainer = document.querySelector('#catioContainer');
   // add eventListener to the buttons
   playButton?.addEventListener('click',startGame);
   highscoreButton?.addEventListener('click',redirectToHighScore);
   loginButton?.addEventListener('click',redirectToLogin);
   signinButton?.addEventListener('click',redirectToSignIn);
+  catioContainer?.addEventListener('mouseover',jumpAnimation);
 };
+
+// Animation de la HomePage
+function jumpAnimation(){
+  const catioContainer = document.querySelector('#catioContainer');
+  catioContainer.classList.add('jump-effect');
+  setTimeout(() => {
+    catioContainer.classList.remove('jump-effect');
+  }, 300);
+}
 
 function renderMenu(){
 
@@ -72,8 +83,8 @@ function renderMenu(){
   return menu;
 }
 
-// EventListener for every button
 
+// EventListener for every button
 function startGame(){
   Navigate('/game');
 }

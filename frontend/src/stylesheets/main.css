@@ -115,4 +115,8 @@
   text-align: center;
 }
 
+.jump-effect {
+  transform: translateY(-100px); /* Adjust the amount to move up */
+  transition: transform 0.5s ease; /* Adjust the duration and easing */
+}
   
