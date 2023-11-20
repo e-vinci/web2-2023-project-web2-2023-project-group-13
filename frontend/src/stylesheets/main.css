@@ -1,0 +1,19 @@
+.form {
+    background-color: skyblue;
+    opacity: 1;
+    width: 500px;
+    height: 500px;
+    margin-left: 500px;
+    text-align: center;
+}
+.input {
+    background-color: white;
+    opacity: 1;
+}
+.buttonSubmit {
+    width : 150px;
+    height: 50px;
+    border : none;
+    background: url("../assets/Button.png");
+    background-size: 150px;
+}
