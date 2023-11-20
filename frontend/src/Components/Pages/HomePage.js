@@ -19,10 +19,11 @@ const HomePage = () => {
   // add menu to main
   main.innerHTML += renderMenu();
   // get buttons
-  const playButton=document.querySelector('#playButton');
-  const highscoreButton=document.querySelector('#scoresButton');
-  const loginButton=document.querySelector('#loginButton');
-  const signinButton=document.querySelector('#signinButton');
+  const playButton = document.querySelector('#playButton');
+  const highscoreButton = document.querySelector('#scoresButton');
+  const loginButton = document.querySelector('#loginButton');
+  const signinButton = document.querySelector('#signinButton');
+  const gameOverButton = document.querySelector('#gameOverButton');
   // getCatioContainer and image
   const catioContainer = document.querySelector('#catioContainer');
   // add eventListener to the buttons
@@ -30,6 +31,8 @@ const HomePage = () => {
   highscoreButton?.addEventListener('click',redirectToHighScore);
   loginButton?.addEventListener('click',redirectToLogin);
   signinButton?.addEventListener('click',redirectToSignIn);
+  gameOverButton?.addEventListener('click',redirectToGameOver);
+  // add eventListener to the container(s)
   catioContainer?.addEventListener('mouseover',jumpAnimation);
 };
 
@@ -47,7 +50,6 @@ function renderMenu(){
   const menu = `
     <div id="skyContainer">
       <img id="skyImage" src="${sky}">
-      
       <div id="groundContainer">
         <img id="groundImage" src="${ground}">
       </div>
@@ -77,6 +79,8 @@ function renderMenu(){
         <button id="loginButton" class="retro-btn">LOG IN</button>
         <br>
         <button id="signinButton" class="retro-btn">SIGN IN</button>
+        <br>
+        <button id="gameOverButton" class="retro-btn">GAMEOVER</button>
       </div>
     </div>
   `;
@@ -99,6 +103,10 @@ function redirectToHighScore(){
 
 function redirectToSignIn(){
   Navigate('/signIn');
+}
+
+function redirectToGameOver(){
+  Navigate('/gameOver');
 }
 
 export default HomePage;

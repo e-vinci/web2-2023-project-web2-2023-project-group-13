@@ -1,4 +1,5 @@
-/*Bouton retro*/
+/*********************************************/
+/*BOUTON RETRO*/
   .retro-btn {
     background: url('../../src/assets/Button.png') no-repeat center center; /* Utilisez l'image comme fond du bouton */
     background-size: cover; /* Ajustez la taille pour remplir complètement le bouton */
@@ -50,13 +51,13 @@
 
 #groundContainer{
   position: absolute;
-  bottom:0%; 
-  left: 0%;
-}
-#groundImage {
-  width: 2000px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-width: 2000px; /* Set a max width */
   height: 70px;
 }
+
 
 #catioContainer{
   position: absolute;
@@ -119,4 +120,52 @@
   transform: translateY(-100px); /* Adjust the amount to move up */
   transition: transform 0.5s ease; /* Adjust the duration and easing */
 }
-  
+
+/****************************************/
+/*GAME OVER PAGE*/
+#cryingCatioContainer{
+  position: absolute;
+  bottom: -4.5%; 
+  left: 27%;
+}
+#cryingCatioImage {
+  width: 50%;
+  height: 50%;
+}
+#bushContainer{
+  position: absolute;
+  bottom: -14%; 
+  left: 30%;
+}
+#bushImage {
+  width: 800px;
+  height: 800px;
+}
+#textContainerGameOver{
+  position: absolute; 
+  top: 25%; 
+  left: 45%; 
+  z-index: 1; 
+}
+.gameOverFont{
+  text-align: center;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color:white;
+  font-size: 70px;
+}
+.pGameOverFont{
+  text-align: center;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color:white;
+  font-size: 35px;
+}
+#fishContainer{
+  position: absolute;
+  top:50%; 
+  left: 60%;
+  z-index: 1; 
+}
+#fishImage {
+  width: 200%;
+  height: 200%;
+}
