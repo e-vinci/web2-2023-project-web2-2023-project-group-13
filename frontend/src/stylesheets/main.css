@@ -17,3 +17,201 @@
     background: url("../assets/Button.png");
     background-size: 150px;
 }
+/*********************************************/
+/*BOUTON RETRO*/
+  .retro-btn {
+    background: url('../../src/assets/Button.png') no-repeat center center; /* Utilisez l'image comme fond du bouton */
+    background-size: cover; /* Ajustez la taille pour remplir complètement le bouton */
+    width: 180px; /* Ajustez la largeur selon vos besoins */
+    height: 60px; /* Ajustez la hauteur selon vos besoins */
+    border: none; /* Supprimez la bordure */
+    cursor: pointer;
+    transition-duration: 0.4s;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .retro-btn::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8));
+    height: 100%;
+    z-index: -1;
+    transition: 0.4s;
+    margin-bottom: 10 px;
+  }
+/*******************************************/  
+/*HOMEPAGE*/
+
+#skyContainer {
+  position: relative;
+  width: 100vw; 
+  height: 92.40vh; 
+  overflow: hidden;
+}
+
+#skyImage {
+  width: 100%;
+  height: 100%;
+}
+
+#sunContainer{
+  position: absolute;
+  top: 2%; 
+  left: 87%;
+}
+#sunImage {
+  width: 150px;
+  height: 150px;
+}
+
+#groundContainer{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-width: 2000px; /* Set a max width */
+  height: 70px;
+}
+
+
+#catioContainer{
+  position: absolute;
+  bottom:6%; 
+  left: 5%;
+}
+#catioImage {
+  width: 100%;
+  height: 100%;
+}
+
+#cloud01Container{
+  position: absolute;
+  top:25%; 
+  left: 18%;
+}
+#cloud01Image {
+  width: 200px;
+  height: 125px;
+}
+
+#cloud02Container{
+  position: absolute;
+  top:10%; 
+  left: 5%;
+}
+#cloud02Image {
+  width:320px;
+  height: 200px;
+}
+
+#cloud03Container{
+  position: absolute;
+  top:15%; 
+  left: 40%;
+}
+#cloud03Image {
+  width: 256px;
+  height: 175px;
+}
+#cloud04Container{
+  position: absolute;
+  top:5%; 
+  right: 20%;
+}
+#cloud04Image {
+  width: 256px;
+  height: 175px;
+}
+/* Container for the buttons */
+#buttonContainer {
+  position: absolute;
+  top: 55%; 
+  left: 70%; 
+  
+  text-align: center;
+}
+
+.jump-effect {
+  transform: translateY(-100px); /* Adjust the amount to move up */
+  transition: transform 0.5s ease; /* Adjust the duration and easing */
+}
+
+/****************************************/
+/*GAME OVER PAGE*/
+#cryingCatioContainer{
+  position: absolute;
+  bottom: -4.5%; 
+  left: 27%;
+}
+#cryingCatioImage {
+  width: 50%;
+  height: 50%;
+}
+#bushContainer{
+  position: absolute;
+  bottom: -14%; 
+  left: 30%;
+}
+#bushImage {
+  width: 800px;
+  height: 800px;
+}
+#textContainerGameOver{
+  position: absolute; 
+  top: 25%; 
+  left: 45%; 
+  z-index: 1; 
+}
+.gameOverFont{
+  text-align: center;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color:white;
+  font-size: 70px;
+}
+.pGameOverFont{
+  text-align: center;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color:white;
+  font-size: 35px;
+}
+#fishContainer{
+  position: absolute;
+  top:50%; 
+  left: 53%;
+  z-index: 1; 
+}
+#fishImage {
+  width: 150%;
+  height: 150%;
+}
+
+.gameoverButton {
+  background: url('../../src/assets/Button.png') no-repeat center center; /* Utilisez l'image comme fond du bouton */
+  background-size: cover; 
+  width: 180px;
+  height: 60px;
+  border: none;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  overflow: hidden;
+  position: absolute;
+  left:-315px;
+  z-index: 1;
+}
+
+.gameoverButton::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8));
+  height: 100%;
+  z-index: -1;
+  transition: 0.4s;
+  margin-bottom: 10 px;
+}
