@@ -9,7 +9,7 @@ const RegisterPage = () => {
 function renderForm(){
     const main = document.querySelector('main');
     const form = document.createElement('form');
-    form.className = 'p-5';
+    form.className = 'form';
     const firstname = document.createElement('input');
     firstname.type = 'text';
     firstname.id = 'firstname';
@@ -39,7 +39,6 @@ function renderForm(){
     submit.value = 'Sign In';
     submit.type = 'submit';
     submit.className = 'buttonSubmit';
-    main.className = 'form'
     form.appendChild(firstname);
     form.appendChild(lastname);
     form.appendChild(email);
