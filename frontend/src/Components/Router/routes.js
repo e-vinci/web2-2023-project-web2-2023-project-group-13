@@ -1,6 +1,6 @@
 import GamePage from '../Pages/GamePage';
 import HomePage from '../Pages/HomePage';
-import NewPage from '../Pages/NewPage';
+import NewPage from '../Pages/RegisterPage';
 import LoginPage from '../Pages/LoginPage';
 import HighScorePage from '../Pages/HighScorePage';
 import SignInPage from '../Pages/SignInPage';
