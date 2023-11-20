@@ -5,7 +5,7 @@ import Navigate from '../Router/Navigate';
 // import images
 import sky from '../../assets/sky.png';
 import sun from '../../assets/sun.png';
-import ground from '../../assets/ground.png';
+import ground from '../../assets/longGround.png';
 import catio from '../../assets/Catio.png';
 import cloud01 from '../../assets/cloud1.png';
 import cloud02 from '../../assets/cloud2.png';
