@@ -4,11 +4,11 @@ import ScoreLabel from './ScoreLabel';
 import skyAsset from '../../assets/sky.png';
 import platformAsset from '../../assets/ground.png';
 import fishAsset from '../../assets/Fish.png';
-import catAsset from '../../assets/cat.png';
+import catAsset from '../../assets/Catio.png';
 import bushAsset from '../../assets/bush.png';
 
 const GROUND_KEY = 'ground';
-const CAT_KEY = 'cat';
+const CAT_KEY = 'Catio';
 const FISH_KEY = 'Fish';
 const SKY_KEY = 'sky';
 const BUSH_KEY = 'bush';
@@ -35,15 +35,15 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
-    const sky = this.add.image(320, 230, 'sky');
-    sky.setScale(3);
-    const platforms = this.createPlatforms();
+    const sky = this.add.image(400, 250, 'sky');
+    sky.setScale(0.29);
+    const platform = this.createPlatform();
     this.player = this.createPlayer();
     this.scoreLabel = this.createScoreLabel(16, 16, 0);
     // creatre bush dans le but de test hitBush et mene a gameOver
-     this.bush = this.createBush();
-    this.physics.add.collider(this.player, platforms);
-      this.physics.add.collider(this.bush, platforms);
+    this.bush = this.createBush();
+     this.physics.add.collider(this.player, platform);
+    this.physics.add.collider(this.bush, platform);
     // this.physics.add.overlap(this.player, this.fishs, this.collectFish, null, this);
      this.physics.add.overlap(this.player, this.bush, this.hitBush, null, this);
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -52,21 +52,20 @@ class GameScene extends Phaser.Scene {
 
   update() {
     if (this.gameOver) {
-      // return;
+      //  return;
       // aller sur la nouvelle page game over
-        window.location.href= '/gameOver';
+         window.location.href= '/gameOver';
     }
   
     if(this.cursors.space.isDown && this.player.body.touching.down ){
       this.player.setVelocityY(-300);
     }
-    if(this.cursors.left.isDown){
-      this.player.setVelocityX(-300);
-    
-    }
+    // cette partie du code doit etre supprimer car ce n'est pas le chat qui doit bouger
+    //  mais le decor , elle ne sert qu'a tester d'autre fonctionalité 
     if(this.cursors.left.isDown ){
-      this.player.setVelocityX(-300);
-    }   
+      this.player.setVelocityX(300);
+    } 
+    // 
     if (this.cursors.up.isDown && this.player.body.touching.down ){  
       this.player.setVelocityY(-300);
     }
@@ -76,21 +75,21 @@ class GameScene extends Phaser.Scene {
     }
   }
 
-  createPlatforms() {
-    const platforms = this.physics.add.staticGroup();
-    platforms
-      .create(400, 580, GROUND_KEY)
+  createPlatform() {
+    const platform = this.physics.add.staticImage(400, 580, GROUND_KEY);
+    platform
       .setScale(2)
       .refreshBody();
-     return platforms;
+     return platform;
   }
 
   createPlayer() {
-    const player = this.physics.add.sprite(10, 10, CAT_KEY);
-    player.setBounce(0.1);
-    player.setScale(0.5);
-    player.setCollideWorldBounds(true);
-    return player;
+    const player = this.physics.add.sprite(100,0, CAT_KEY);
+    player
+      .setBounce(0.1)
+      .setScale(0.5);
+
+      return player;
   }
 
   /* totalement a recréer tout ce qui est poisson */
@@ -98,7 +97,7 @@ class GameScene extends Phaser.Scene {
   // createFish() {
   //   const fishs = this.physics.add.group({
   //     key: FISH_KEY,
-  //     repeat: 11,
+  //     repeat: 3,
   //     setXY: { x: 12, y: 0, stepX: 70 },
   //   });
 
@@ -138,10 +137,11 @@ mouvant cette metode sert uniquement a voir si la methode
 hitBush fonctionne 
 */
   createBush(){
-    const bush = this.physics.add.sprite(300, 0.5, BUSH_KEY);
-    bush.setScale(0.3);
-    bush.setCollideWorldBounds(true);
-    return bush;
+    const bush = this.physics.add.image(300, 0.5, BUSH_KEY);
+    bush
+      .setScale(0.3);
+  
+      return bush;
   }
 
   hitBush() {
