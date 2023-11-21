@@ -6,7 +6,6 @@ import sky from '../../assets/sky.png';
 import ground from '../../assets/longGround.png';
 import cryingCatio from '../../assets/cryingCatio.png';
 import bush from '../../assets/bush.png';
-// import fish from '../../assets/Fish.png';
 
 const GameOverPage = () => {
   clearPage();
