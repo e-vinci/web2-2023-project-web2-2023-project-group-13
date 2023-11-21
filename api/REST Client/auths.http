@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:3000
+@baseUrl = http://localhost:8080
 
 ### Try to login an unknow user
 POST {{baseUrl}}/auths/login

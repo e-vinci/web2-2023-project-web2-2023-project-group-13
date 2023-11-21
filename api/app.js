@@ -4,7 +4,7 @@ const logger = require('morgan');
 const cors = require('cors');
 
 const corsOptions = {
-  origin: ['http://localhost:8080', 'https://e-baron.github.io'],
+  origin: ['http://localhost:8080']
 };
 
 const usersRouter = require('./routes/users');
@@ -20,7 +20,7 @@ app.use(cookieParser());
 
 app.use(cors(corsOptions));
 
-app.use('/users', usersRouter);
+app.use('/users', cors(corsOptions), usersRouter);
 app.use('/pizzas', pizzaRouter);
 app.use('/auths', authsRouter);
 
