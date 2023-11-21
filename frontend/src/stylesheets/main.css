@@ -162,10 +162,37 @@
 #fishContainer{
   position: absolute;
   top:50%; 
-  left: 60%;
+  left: 53%;
   z-index: 1; 
 }
 #fishImage {
-  width: 200%;
-  height: 200%;
+  width: 150%;
+  height: 150%;
+}
+
+.gameoverButton {
+  background: url('../../src/assets/Button.png') no-repeat center center; /* Utilisez l'image comme fond du bouton */
+  background-size: cover; 
+  width: 180px;
+  height: 60px;
+  border: none;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  overflow: hidden;
+  position: absolute;
+  left:-315px;
+  z-index: 1;
+}
+
+.gameoverButton::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8));
+  height: 100%;
+  z-index: -1;
+  transition: 0.4s;
+  margin-bottom: 10 px;
 }

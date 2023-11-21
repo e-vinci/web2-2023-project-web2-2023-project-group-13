@@ -27,14 +27,27 @@ const HomePage = () => {
   // getCatioContainer and image
   const catioContainer = document.querySelector('#catioContainer');
   // add eventListener to the buttons
-  playButton?.addEventListener('click',startGame);
+
   highscoreButton?.addEventListener('click',redirectToHighScore);
   loginButton?.addEventListener('click',redirectToLogin);
   signinButton?.addEventListener('click',redirectToSignIn);
   gameOverButton?.addEventListener('click',redirectToGameOver);
   // add eventListener to the container(s)
   catioContainer?.addEventListener('mouseover',jumpAnimation);
-};
+
+  playButton?.addEventListener('click', () => {
+    console.log("show instructions");
+    showInstructions();
+  });
+  
+ 
+   // Fonction pour afficher les instructions
+   function showInstructions() {
+     // Naviguez vers la scène du jeu pour afficher les instructions
+     Navigate('/game');
+   }
+ };
+
 
 // Animation de la HomePage
 function jumpAnimation(){
@@ -88,10 +101,12 @@ function renderMenu(){
 }
 
 
+
+
 // EventListener for every button
-function startGame(){
-  Navigate('/game');
-}
+// function startGame(){
+ // Navigate('/game');
+// }
 
 function redirectToLogin(){
   Navigate('/login');
