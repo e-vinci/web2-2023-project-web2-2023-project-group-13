@@ -1,13 +1,16 @@
 import Phaser from 'phaser';
 import ScoreLabel from './ScoreLabel';
 
-import skyAsset from '../../assets/sky.png';
+
+import skyAsset from '../../assets/sky2.jpg';
 import platformAsset from '../../assets/ground.png';
 import fishAsset from '../../assets/Fish.png';
 import catAsset from '../../assets/cat.png';
 import bushAsset from '../../assets/bush.png';
 import cadreAsset from '../../assets/Button.png';
 import flecheAsset from '../../assets/fleche_haut.png';
+import catioAsset from '../../assets/catio_help.png'
+import buissonAsset from '../../assets/buisson_help.png';
 
 
 const GROUND_KEY = 'ground';
@@ -16,7 +19,9 @@ const FISH_KEY = 'Fish';
 const SKY_KEY = 'sky';
 const BUSH_KEY = 'bush';
 const CADRE_KEY='cadre';
-const FLECHE_KEY='fleche'
+const FLECHE_KEY='fleche';
+const CATIO_HELP='catHelp';
+const BUISSON_HELP='buisson';
 
 class GameScene extends Phaser.Scene {
   constructor() {
@@ -27,6 +32,8 @@ class GameScene extends Phaser.Scene {
     this.fishs = undefined;
     this.bush= undefined;
     this.gameOver = false;
+    this.sky=undefined;
+    this.speed=4;
   }
 
   preload() {
@@ -37,15 +44,22 @@ class GameScene extends Phaser.Scene {
     this.load.image(CAT_KEY, catAsset);
     this.load.image(BUSH_KEY,bushAsset);
     this.load.image(FLECHE_KEY, flecheAsset);
-    this.load.image(CAT_KEY,catAsset);
     this.load.image(CADRE_KEY,cadreAsset);
+    this.load.image(CATIO_HELP,catioAsset);
+    this.load.image(BUISSON_HELP,buissonAsset);
    
   }
 
   create() {
+    this.sky1 = this.add.image(0, 0, 'sky');
+    this.sky1.setScale(1);
+    this.sky2 = this.add.image(this.sky1.width, 0, 'sky');
+    this.sky2.setScale(1);
+    this.sky1.y += 110;
+    this.sky2.y += 110;
+
     this.showInstructions();
-    const sky = this.add.image(320, 230, 'sky');
-    sky.setScale(3);
+    
     const platforms = this.createPlatforms();
     this.player = this.createPlayer();
     this.scoreLabel = this.createScoreLabel(16, 16, 0);
@@ -57,6 +71,7 @@ class GameScene extends Phaser.Scene {
      this.physics.add.overlap(this.player, this.bush, this.hitBush, null, this);
     this.cursors = this.input.keyboard.createCursorKeys();
 
+    
   }
 
   showInstructions() {
@@ -69,17 +84,17 @@ class GameScene extends Phaser.Scene {
     cadre.setScale(scaleX, scaleY);
   
    // Ajoutez les images au cadre
-  const poisson = this.add.image(cadre.x - cadre.displayWidth / 2 + 150, cadre.y - cadre.displayHeight / 2 + 150, FISH_KEY);
-  const buisson = this.add.image(poisson.x + poisson.displayWidth + 70, cadre.y - cadre.displayHeight / 2 + 150, BUSH_KEY);
+  const poisson = this.add.image(cadre.x - cadre.displayWidth / 2 + 150, cadre.y - cadre.displayHeight / 2 + 150, 'Fish');
+  const buisson = this.add.image(poisson.x + poisson.displayWidth + 70, cadre.y - cadre.displayHeight / 2 + 150, BUISSON_HELP);
   const fleche = this.add.image(buisson.x + buisson.displayWidth + 70, cadre.y - cadre.displayHeight / 2 + 150, FLECHE_KEY);
-  const chat = this.add.image(fleche.x + fleche.displayWidth + 90, cadre.y - cadre.displayHeight / 2 + 150, CAT_KEY);
+  const chat = this.add.image(fleche.x + fleche.displayWidth + 90, cadre.y - cadre.displayHeight / 2 + 150, CATIO_HELP);
     // Ajoutez le texte pour chaque image
     const style = { font: '20px Arial', fill: '#000' };
     const poissonText =this.add.text(poisson.x, poisson.y + poisson.displayHeight / 2 + 10, 'Points', style).setOrigin(0.5);
     const buissonText=this.add.text(buisson.x, buisson.y + buisson.displayHeight / 2 + 10, 'Danger', style).setOrigin(0.5);
     const flecheText=this.add.text(fleche.x, fleche.y + fleche.displayHeight / 2 + 15, 'Jump', style).setOrigin(0.5);
     const chatText =this.add.text(chat.x, chat.y + chat.displayHeight / 2 + 10, 'Main Character', style).setOrigin(0.5);
-  
+    
     // Ajoutez le texte dans le cadre
     const instructionsText = `
     Welcome to Catio!
@@ -103,6 +118,19 @@ class GameScene extends Phaser.Scene {
     const okButton = this.add.text(cadre.x, text.y + text.displayHeight +30, 'OK', { fontSize: '24px', fill: '#000', backgroundColor: '#ddd', padding: { x: 10, y: 5 } })
       .setOrigin(0.5)
       .setInteractive(); // Permet d'ajouter des événements interactifs
+
+      cadre.setDepth(1);
+      poisson.setDepth(1);
+      buisson.setDepth(1);
+      fleche.setDepth(1);
+      chat.setDepth(1);
+      poissonText.setDepth(1);
+      buissonText.setDepth(1);
+      flecheText.setDepth(1);
+      chatText.setDepth(1);
+      text.setDepth(1);
+      okButton.setDepth(1);
+
   
     // Ajoutez un gestionnaire d'événements pour le bouton "OK"
     okButton.on('pointerdown', () => {
@@ -122,11 +150,25 @@ class GameScene extends Phaser.Scene {
     });
   }
 
+
   update() {
     if (this.gameOver) {
       // return;
       // aller sur la nouvelle page game over
         window.location.href= '/gameOver';
+    }
+
+
+    // defilement
+    this.sky1.x -= this.speed;
+    this.sky2.x -= this.speed;
+    
+    if (this.sky1.x <= -this.sky1.width) {
+      this.sky1.x = this.sky2.x + this.sky2.width;
+    }
+    
+    if (this.sky2.x <= -this.sky2.width) {
+      this.sky2.x = this.sky1.x + this.sky1.width;
     }
   
     if(this.cursors.space.isDown && this.player.body.touching.down ){
