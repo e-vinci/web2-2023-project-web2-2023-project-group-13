@@ -38,6 +38,11 @@ function renderContent(){
       <div id="groundContainer">
         <img id="groundImage" src="${ground}">
       </div>
+      <div id="textContainer">
+        <h1 id="pageTitle">
+            BEST OF HIGH SCORES 
+        </h1>
+      </div>
       <div id="catioContainer">
         <img id="catioImage" src="${catio}">
       </div>
@@ -59,9 +64,9 @@ function renderContent(){
       <div id="buttonContainer">
         <button id="personnalButton" class="retro-btn">PERSONNAL SCORES</button>
         <br>
-        <button id="timerButton" class="retro-btn">BEST TIMER SCORE</button>
+        <button id="timerButton" class="retro-btn">BEST TIMERS</button>
         <br>
-        <button id="fishButton" class="retro-btn">BEST FISH SCORE</button>
+        <button id="fishButton" class="retro-btn">BEST FISHERMAN</button>
         <br>
         <button id="homeButton" class="retro-btn">BACK TO HOMEPAGE</button>
         <br>

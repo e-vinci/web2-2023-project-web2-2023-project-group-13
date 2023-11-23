@@ -1,9 +1,9 @@
 import { clearPage } from '../../utils/render';
 
-const UniversalFishPage = () => {
+const personnalFish = () => {
   clearPage();
  
 };
 
 
-export default UniversalFishPage;
+export default personnalFish;

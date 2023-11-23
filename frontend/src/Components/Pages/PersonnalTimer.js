@@ -1,9 +1,9 @@
 import { clearPage } from '../../utils/render';
 
-const UniversalFishPage = () => {
+const PersonnalTimer = () => {
   clearPage();
  
 };
 
 
-export default UniversalFishPage;
+export default PersonnalTimer;

@@ -8,7 +8,8 @@ import GameOverPage from '../Pages/GameOverPage';
 import UniversalTimerPage from '../Pages/UniversalTimerPage';
 import UniversalFishPage from '../Pages/UniversalFishPage';
 import PersonnalScorePage from '../Pages/PersonnalScorePage';
-
+import PersonnalTimer from '../Pages/PersonnalTimer';
+import PersonnalFish from '../Pages/PersonnalFish';
 
 const routes = {
   '/': HomePage,
@@ -21,6 +22,8 @@ const routes = {
   '/timer':UniversalTimerPage,
   '/fish' :UniversalFishPage,
   '/personnal':PersonnalScorePage,
+  '/personnalTimer':PersonnalTimer,
+  '/personnalFish':PersonnalFish,
 
 };
 
