@@ -1,12 +1,11 @@
 import Phaser from 'phaser';
 import ScoreLabel from './ScoreLabel';
 
-
 import skyAsset from '../../assets/sky2.jpg';
 import platformAsset from '../../assets/ground.png';
 import fishAsset from '../../assets/Fish.png';
-import catAsset from '../../assets/Catio.png';
-import bushAsset from '../../assets/bush.png';
+import catAsset from '../../assets/catio_play.png';
+import bushAsset from '../../assets/bush_test.png';
 import cadreAsset from '../../assets/Button.png';
 import flecheAsset from '../../assets/fleche_haut.png';
 import catioAsset from '../../assets/catio_help.png'
@@ -60,15 +59,18 @@ class GameScene extends Phaser.Scene {
 
     this.showInstructions();
     
-    const platforms = this.createPlatforms();
+    const platform = this.createPlatform();
     this.player = this.createPlayer();
     this.scoreLabel = this.createScoreLabel(16, 16, 0);
     // creatre bush dans le but de test hitBush et mene a gameOver
-    this.bush = this.createBush();
-     this.physics.add.collider(this.player, platform);
+     this.bush = this.createBush();
+    this.physics.add.collider(this.player, platform);
     this.physics.add.collider(this.bush, platform);
-    // this.physics.add.overlap(this.player, this.fishs, this.collectFish, null, this);
-     this.physics.add.overlap(this.player, this.bush, this.hitBush, null, this);
+    this.fishs= this.createFishs();
+    this.physics.add.collider(this.fishs,platform);
+    this.physics.add.collider(this.fishs,this.bush);
+    this.physics.add.overlap(this.player, this.fishs, this.collectFishs, null, this);
+    this.physics.add.overlap(this.player, this.bush, this.hitBush, null, this);
     this.cursors = this.input.keyboard.createCursorKeys();
 
     
@@ -155,9 +157,8 @@ class GameScene extends Phaser.Scene {
     if (this.gameOver) {
       //  return;
       // aller sur la nouvelle page game over
-         window.location.href= '/gameOver';
+     window.location.href= '/gameOver';
     }
-
 
     // defilement
     this.sky1.x -= this.speed;
@@ -176,9 +177,18 @@ class GameScene extends Phaser.Scene {
     }
     // cette partie du code doit etre supprimer car ce n'est pas le chat qui doit bouger
     //  mais le decor , elle ne sert qu'a tester d'autre fonctionalité 
-    if(this.cursors.left.isDown ){
+    if(this.cursors.right.isDown ){
       this.player.setVelocityX(300);
-    } 
+    } else if (this.cursors.left.isDown){
+      this.player.setVelocityX(-300);
+    } else {
+      this.player.setVelocityX(0);
+    }
+    // if(this.cursors.left.isDown ){
+    // this.player.setVelocityX(-300);
+    // } else {
+    // this.player.setVelocityX(0);
+// }
     // 
     if (this.cursors.up.isDown && this.player.body.touching.down ){  
       this.player.setVelocityY(-300);
@@ -201,42 +211,35 @@ class GameScene extends Phaser.Scene {
     const player = this.physics.add.sprite(100,0, CAT_KEY);
     player
       .setBounce(0.1)
-      .setScale(0.5);
-
+      .setScale(0.3);
       return player;
   }
 
   /* totalement a recréer tout ce qui est poisson */
+//  a revoir //
+  createFishs() {
+    const fishs = this.physics.add.group({
+      key: FISH_KEY,
+      repeat: 2,
+      setXY: { x: 400, y: 300, stepX: 50 },
 
-  // createFish() {
-  //   const fishs = this.physics.add.group({
-  //     key: FISH_KEY,
-  //     repeat: 3,
-  //     setXY: { x: 12, y: 0, stepX: 70 },
-  //   });
+    });
 
-  //   // fishs.children.iterate((child) => {
-  //   //   child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-  //   // });
+    return fishs;
+  }
 
-  //   return fishs;
-  // }
+  collectFishs(player, fish) {
+    fish.disableBody(true, true);
+    this.scoreLabel.add(1);
+    // cette partie du code sert a remetrre des posson qui ont ete manger
+    // exactement au meme endroit et au meme nombre
+    // if (this.fishs.countActive(true) === 0) {
+    //   this.fishs.children.iterate((child) => {
+    //     child.enableBody(true, child.x, 0, true, true);
+    //   });
+  }
 
-  // collectFish(player, fish) {
-  //   fish.disableBody(true, true);
-  //   this.scoreLabel.add(1);
-  //   if (this.fishs.countActive(true) === 0) {
-  //     this.fishs.children.iterate((child) => {
-  //       child.enableBody(true, child.x, 0, true, true);
-  //     });
-  //   }
-
-  // }
-
-  // collectFish(player,fish) {
-  //   fish.disableBody(true,true);
-  //   this.scoreLabel.add(1);
-  // }
+  
 
   createScoreLabel(x, y, score) {
     const style = { fontSize: '32px', fill: '#000' };
@@ -251,15 +254,16 @@ mouvant cette metode sert uniquement a voir si la methode
 hitBush fonctionne 
 */
   createBush(){
-    const bush = this.physics.add.image(300, 0.5, BUSH_KEY);
-    bush
-      .setScale(0.3);
-  
-      return bush;
+    const bush = this.physics.add.group();
+    // const bush1 = bush.create(229, 0.5, BUSH_KEY)
+    const bush2 = bush.create(700, 0.5, BUSH_KEY)
+    // bush1.setScale(0.2);
+    bush2.setScale(0.2);
+    return bush;
   }
 
   hitBush() {
-    this.scoreLabel.setText(`GAME OVER : ( \nYour Score = ${this.scoreLabel.score}`);
+    this.scoreLabel.setText(`GAME OVER  \nYour Score = ${this.scoreLabel.score}`);
     this.gameOver = true;
   }
 }
