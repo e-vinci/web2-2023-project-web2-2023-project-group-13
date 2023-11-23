@@ -36,7 +36,6 @@ const HomePage = () => {
   catioContainer?.addEventListener('mouseover',jumpAnimation);
 
   playButton?.addEventListener('click', () => {
-    console.log("show instructions");
     showInstructions();
   });
   
