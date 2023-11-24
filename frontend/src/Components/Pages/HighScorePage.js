@@ -40,7 +40,7 @@ function renderContent(){
       </div>
       <div id="textContainer">
         <h1 id="pageTitle">
-            BEST OF HIGH SCORES 
+            BEST SCORES OF ALL TIME!  
         </h1>
       </div>
       <div id="catioContainer">
@@ -64,9 +64,9 @@ function renderContent(){
       <div id="buttonContainer">
         <button id="personnalButton" class="retro-btn">PERSONNAL SCORES</button>
         <br>
-        <button id="timerButton" class="retro-btn">BEST TIMERS</button>
+        <button id="timerButton" class="retro-btn">TIMERS</button>
         <br>
-        <button id="fishButton" class="retro-btn">BEST FISHERMAN</button>
+        <button id="fishButton" class="retro-btn">FISH</button>
         <br>
         <button id="homeButton" class="retro-btn">BACK TO HOMEPAGE</button>
         <br>

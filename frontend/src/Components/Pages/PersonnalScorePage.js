@@ -38,7 +38,7 @@ function renderContent(){
       </div>
       <div id="textContainer">
         <h1 id="pageTitle">
-            PERSONNAL HIGH SCORES
+            BEST PERSONNAL SCORES
         </h1>
       </div>
       <div id="catioContainer">
@@ -60,9 +60,9 @@ function renderContent(){
         <img id="cloud04Image" src="${cloud04}">
       </div>
       <div id="buttonContainer">
-        <button id="timerButton" class="retro-btn">&#128343;</button>
+        <button id="timerButton" class="retro-btn">TIMER</button>
         <br>
-        <button id="fishButton" class="retro-btn">&#127907;&#128031;</button>
+        <button id="fishButton" class="retro-btn">FISH</button>
         <br>
         <button id="backButton" class="retro-btn">GO BACK</button>
         <br>
