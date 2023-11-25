@@ -21,10 +21,10 @@ function renderContent(){
     <img id="waterImage" src="${water}">
     <div id="waterTextContainer">
       <h1>My High Scores By Fish</h1>
-      <p>Bastien: 1000x</p>
-      <p>Wissal: 756x</p>
-      <p>Nisrine: 461x</p>
-      <p>Erica: 222x</p>
+      <p>1000x</p>
+      <p>756x</p>
+      <p>461x</p>
+      <p>222x</p>
       <p>travailler avec base de donnée pour récuperer le nom et le score respectif.</p>
     </div>
     <div id="scorePagesButtonContainer">
@@ -36,7 +36,7 @@ function renderContent(){
 }
 
 function redirectToUniversalScoreMenu(){
-  Navigate('/highscore');
+  Navigate('/personnal');
 }
 
 export default personnalFish;

@@ -226,7 +226,7 @@ body {
 }
 
 /***********************************************/
-/* UNIVERSAL FISH HIGHSCORE PAGE */
+/* UNIVERSAL HIGHSCORE PAGES AND PERSONNAL PAGES */
 #waterBackGround{
   position: relative;
   width: 100vw; 
@@ -265,4 +265,19 @@ body {
   bottom: 4%; 
   left: 73%; 
   text-align: center;
+}
+
+/***********************************************/
+/* UNIVERSAL AND PERSONNAL TIMER HIGHSCORE PAGE */
+
+#timergif{
+  position: absolute;
+  bottom:25%; 
+  left: 7%;
+  z-index: 1;
+}
+
+#timerImage {
+  width: 100%;
+  height: 100%;
 }

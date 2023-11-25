@@ -2,7 +2,7 @@ import { clearPage } from '../../utils/render';
 // import Navigation
 import Navigate from '../Router/Navigate';
 // import images
-// import timerGif from '../../assets/Timer.gif'
+import timerGif from '../../assets/Timer.gif'
 import sky from '../../assets/sky.png';
 
 const UniversalTimerPage = () => {
@@ -20,6 +20,9 @@ function renderContent(){
   const content= `
   <div id="waterBackGround">
     <img id="waterImage" src="${sky}">
+    <div id="timergif">
+      <img id="timerImage" src="${timerGif}">
+    </div>
     <div id="waterTextContainer">
       <h1>High Scores By Timer</h1>
       <p>Bastien: 600.00s</p>
