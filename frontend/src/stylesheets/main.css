@@ -1,6 +1,6 @@
 /*********************************************/
 /*Retro Font*/
-@font-face {
+/*@font-face {
   font-family: 'retro_computer';
   src: url(../../../font/Mario-Kart-DS.ttf) format('truetype');
   
@@ -8,7 +8,7 @@
 
 body {
   font-family: 'retro_computer', sans-serif;
-}
+}*/
 
 /*********************************************/
 /*BOUTON RETRO*/
