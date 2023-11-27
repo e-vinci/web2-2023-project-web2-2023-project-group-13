@@ -13,7 +13,33 @@ const LoginPage = () => {
   clearPage();
   const main = document.querySelector('main');
   main.innerHTML += renderMenu();
+  renderForm()
 };
+
+function renderForm(){
+  const main = document.querySelector('main');
+  const form = document.createElement('form');
+  const email = document.createElement('input');
+  email.type = 'email';
+  email.id = 'email';
+  email.placeholder = 'someone@example.com';
+  email.required = true;
+  email.className='input';
+  const password = document.createElement('input');
+  password.type = 'password';
+  password.id = 'password';
+  password.placeholder = '*********';
+  password.className = 'input';
+  const submit = document.createElement('input');
+  submit.value = 'Connect';
+  submit.type = 'submit';
+  submit.className = 'buttonSubmit';
+  form.className = 'form';
+  form.appendChild(email);
+  form.appendChild(password);
+  form.appendChild(submit);
+  main.appendChild(form);
+}
 
 
 function renderMenu(){
