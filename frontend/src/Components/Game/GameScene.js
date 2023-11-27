@@ -11,7 +11,7 @@ import cadreAsset from '../../assets/Button.png';
 import flecheAsset from '../../assets/fleche_haut.png';
 import catioAsset from '../../assets/catio_help.png'
 import buissonAsset from '../../assets/buisson_help.png';
-
+import catWalk from '../../assets/spritesheet.png';
 
 const GROUND_KEY = 'ground';
 const CAT_KEY = 'cat';
@@ -22,6 +22,7 @@ const CADRE_KEY='cadre';
 const FLECHE_KEY='fleche';
 const CATIO_HELP='catHelp';
 const BUISSON_HELP='buisson';
+
 
 class GameScene extends Phaser.Scene {
   constructor() {
@@ -51,6 +52,9 @@ class GameScene extends Phaser.Scene {
     this.load.image(CADRE_KEY,cadreAsset);
     this.load.image(CATIO_HELP,catioAsset);
     this.load.image(BUISSON_HELP,buissonAsset);
+    this.load.spritesheet('catio', catWalk,
+        { frameWidth: 358, frameHeight: 289 }
+    );
    
   }
 
@@ -66,10 +70,10 @@ class GameScene extends Phaser.Scene {
     
 
    // Dans GameScene
-if (!gameConfig.instructionsShown) {
-  this.showInstructions();
-  gameConfig.instructionsShown = true;
-}
+    if (!gameConfig.instructionsShown) {
+      this.showInstructions();
+      gameConfig.instructionsShown = true;
+    }
     
     const platforms = this.createPlatforms();
     this.player = this.createPlayer();
@@ -166,59 +170,50 @@ if (!gameConfig.instructionsShown) {
     if (this.gameOver) {
       // return;
       // aller sur la nouvelle page game over
-        window.location.href= '/gameOver';
+      window.location.href= '/gameOver';
     }
 
     
     
-     this.sky1.x -= this.skySpeed;// Déplacement horizontal de la première image du ciel
-     this.sky2.x -= this.skySpeed;  // Déplacement horizontal de la deuxième image du ciel
+    this.sky1.x -= this.skySpeed;// Déplacement horizontal de la première image du ciel
+    this.sky2.x -= this.skySpeed;  // Déplacement horizontal de la deuxième image du ciel
 
-     // Réinitialisation de la première image du ciel lorsqu'elle sort de l'écran
-     if (this.sky1.x <= -this.sky1.width) {
-         this.sky1.x = this.sky2.x + this.sky2.width;
-     }
+    // Réinitialisation de la première image du ciel lorsqu'elle sort de l'écran
+    if (this.sky1.x <= -this.sky1.width) {
+        this.sky1.x = this.sky2.x + this.sky2.width;
+    }
 
-     // Réinitialisation de la deuxième image du ciel lorsqu'elle sort de l'écran
-     if (this.sky2.x <= -this.sky2.width) {
-         this.sky2.x = this.sky1.x + this.sky1.width;
-     }
-
-     
-      // Déplacez les deux images du sol
-      this.ground1.x -= this.groundSpeed;
-      this.ground2.x -= this.groundSpeed;
+    // Réinitialisation de la deuxième image du ciel lorsqu'elle sort de l'écran
+    if (this.sky2.x <= -this.sky2.width) {
+        this.sky2.x = this.sky1.x + this.sky1.width;
+    }
     
-      // Réinitialisez la première image du sol lorsqu'elle sort de l'écran
-      if (this.ground1.x <= -this.ground1.width) {
-        this.ground1.x = this.ground2.x + this.ground2.width;
-      }
-    
-      // Réinitialisez la deuxième image du sol lorsqu'elle sort de l'écran
-      if (this.ground2.x <= -this.ground2.width) {
-        this.ground2.x = this.ground1.x + this.ground1.width;
-      }
-    
-    
+    // Déplacez les deux images du sol
+    this.ground1.x -= this.groundSpeed;
+    this.ground2.x -= this.groundSpeed;
   
-
+    // Réinitialisez la première image du sol lorsqu'elle sort de l'écran
+    if (this.ground1.x <= -this.ground1.width) {
+      this.ground1.x = this.ground2.x + this.ground2.width;
+    }
   
+    // Réinitialisez la deuxième image du sol lorsqu'elle sort de l'écran
+    if (this.ground2.x <= -this.ground2.width) {
+      this.ground2.x = this.ground1.x + this.ground1.width;
+    }
+
     if(this.cursors.space.isDown && this.player.body.touching.down ){
       this.player.setVelocityY(-300);
-    }
-    if(this.cursors.left.isDown){
-      this.player.setVelocityX(-300);
-    
-    }
-    if(this.cursors.left.isDown ){
-      this.player.setVelocityX(-300);
-    }   
+    } 
     if (this.cursors.up.isDown && this.player.body.touching.down ){  
       this.player.setVelocityY(-300);
     }
-    else if (this.cursors.down.isDown)
+    if (this.cursors.down.isDown && !this.player.body.touching.down)
     {
-     this.player.setVelocityY(300);
+    this.player.setVelocityY(300);
+    }
+    if(this.player.body.touching.down){
+    this.player.anims.play('walk', true);
     }
   }
 
@@ -235,10 +230,19 @@ if (!gameConfig.instructionsShown) {
 
 
   createPlayer() {
-    const player = this.physics.add.sprite(10, 10, CAT_KEY);
-    player.setBounce(0.1);
-    player.setScale(0.5);
-    player.setCollideWorldBounds(true);
+    // 100x450 pixels from the ground
+    const player = this.physics.add.sprite(100, 450, 'catio');
+    player
+      .setBounce(0.1)
+      .setScale(0.3);
+
+    this.anims.create({
+      key: 'walk',
+      frames: this.anims.generateFrameNumbers('catio', {start: 0, end: 1}),
+      frameRate: 5,
+      repeat: -1
+    })
+    
     return player;
   }
 
