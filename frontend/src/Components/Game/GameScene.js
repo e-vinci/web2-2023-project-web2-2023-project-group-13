@@ -11,7 +11,7 @@ import cadreAsset from '../../assets/Button.png';
 import flecheAsset from '../../assets/fleche_haut.png';
 import catioAsset from '../../assets/catio_help.png'
 import buissonAsset from '../../assets/buisson_help.png';
-import catWalk from '../../assets/spritesheet.png';
+import catWalk from '../../assets/spritesheetTEST6.png';
 
 const GROUND_KEY = 'ground';
 const CAT_KEY = 'cat';
@@ -53,7 +53,7 @@ class GameScene extends Phaser.Scene {
     this.load.image(CATIO_HELP,catioAsset);
     this.load.image(BUISSON_HELP,buissonAsset);
     this.load.spritesheet('catio', catWalk,
-        { frameWidth: 358, frameHeight: 289 }
+        { frameWidth: 360, frameHeight: 291 }
     );
    
   }
@@ -215,6 +215,9 @@ class GameScene extends Phaser.Scene {
     if(this.player.body.touching.down){
     this.player.anims.play('walk', true);
     }
+    if(!this.player.body.touching.down){
+      this.player.anims.play('jump', true);
+    }
   }
 
   createPlatforms() {
@@ -238,10 +241,17 @@ class GameScene extends Phaser.Scene {
 
     this.anims.create({
       key: 'walk',
-      frames: this.anims.generateFrameNumbers('catio', {start: 0, end: 1}),
-      frameRate: 5,
+      frames: this.anims.generateFrameNumbers('catio', {start: 4, end: 5}),
+      frameRate: 8,
       repeat: -1
     })
+
+    this.anims.create({
+      key: 'jump',
+      frames: this.anims.generateFrameNumbers('catio', {start: 0, end: 3}),
+      frameRate:1.9,
+      repeat: 0
+  });
     
     return player;
   }
