@@ -36,7 +36,6 @@ const HomePage = () => {
   catioContainer?.addEventListener('mouseover',jumpAnimation);
 
   playButton?.addEventListener('click', () => {
-    console.log("show instructions");
     showInstructions();
   });
   
@@ -65,6 +64,11 @@ function renderMenu(){
       <img id="skyImage" src="${sky}">
       <div id="groundContainer">
         <img id="groundImage" src="${ground}">
+      </div>
+      <div id="textContainer">
+        <h1 id="pageTitle">
+            WELCOME TO CATIO ! 
+        </h1>
       </div>
       <div id="catioContainer">
         <img id="catioImage" src="${catio}">

@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import ScoreLabel from './ScoreLabel';
-
+import gameConfig  from "./gameConfig";
 
 import skyAsset from '../../assets/sky2.jpg';
 import platformAsset from '../../assets/ground.png';
@@ -33,14 +33,18 @@ class GameScene extends Phaser.Scene {
     this.bush= undefined;
     this.gameOver = false;
     this.sky=undefined;
-    this.speed=4;
+    this.ground1=undefined;
+    this.ground2=undefined;
+    this.skySpeed = 3;  // Vitesse de défilement du ciel
+    this.groundSpeed=5;// Vitesse de défilement du sol
   }
+
+
 
   preload() {
     this.load.image(SKY_KEY, skyAsset);
     this.load.image(GROUND_KEY, platformAsset);
     this.load.image(FISH_KEY, fishAsset);
-    this.load.image(GROUND_KEY,platformAsset);
     this.load.image(CAT_KEY, catAsset);
     this.load.image(BUSH_KEY,bushAsset);
     this.load.image(FLECHE_KEY, flecheAsset);
@@ -51,14 +55,21 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
+    
+    // Initialisation des images du ciel
     this.sky1 = this.add.image(0, 0, 'sky');
-    this.sky1.setScale(1);
-    this.sky2 = this.add.image(this.sky1.width, 0, 'sky');
-    this.sky2.setScale(1);
-    this.sky1.y += 110;
-    this.sky2.y += 110;
+    this.sky1.setScale(1);// Échelle du ciel (taille d'origine)
+    this.sky2 = this.add.image(this.sky1.width, 0, 'sky');// Deuxième image du ciel décalée d'une largeur du ciel
+    this.sky2.setScale(1);// Échelle du ciel (taille d'origine)
+    this.sky1.y += 110;  // Décalage vertical de la première image du ciel
+    this.sky2.y += 110;  // Décalage vertical de la deuxième image du ciel
+    
 
-    this.showInstructions();
+   // Dans GameScene
+if (!gameConfig.instructionsShown) {
+  this.showInstructions();
+  gameConfig.instructionsShown = true;
+}
     
     const platforms = this.createPlatforms();
     this.player = this.createPlayer();
@@ -70,7 +81,7 @@ class GameScene extends Phaser.Scene {
     // this.physics.add.overlap(this.player, this.fishs, this.collectFish, null, this);
      this.physics.add.overlap(this.player, this.bush, this.hitBush, null, this);
     this.cursors = this.input.keyboard.createCursorKeys();
-
+    
     
   }
 
@@ -158,18 +169,39 @@ class GameScene extends Phaser.Scene {
         window.location.href= '/gameOver';
     }
 
+    
+    
+     this.sky1.x -= this.skySpeed;// Déplacement horizontal de la première image du ciel
+     this.sky2.x -= this.skySpeed;  // Déplacement horizontal de la deuxième image du ciel
 
-    // defilement
-    this.sky1.x -= this.speed;
-    this.sky2.x -= this.speed;
+     // Réinitialisation de la première image du ciel lorsqu'elle sort de l'écran
+     if (this.sky1.x <= -this.sky1.width) {
+         this.sky1.x = this.sky2.x + this.sky2.width;
+     }
+
+     // Réinitialisation de la deuxième image du ciel lorsqu'elle sort de l'écran
+     if (this.sky2.x <= -this.sky2.width) {
+         this.sky2.x = this.sky1.x + this.sky1.width;
+     }
+
+     
+      // Déplacez les deux images du sol
+      this.ground1.x -= this.groundSpeed;
+      this.ground2.x -= this.groundSpeed;
     
-    if (this.sky1.x <= -this.sky1.width) {
-      this.sky1.x = this.sky2.x + this.sky2.width;
-    }
+      // Réinitialisez la première image du sol lorsqu'elle sort de l'écran
+      if (this.ground1.x <= -this.ground1.width) {
+        this.ground1.x = this.ground2.x + this.ground2.width;
+      }
     
-    if (this.sky2.x <= -this.sky2.width) {
-      this.sky2.x = this.sky1.x + this.sky1.width;
-    }
+      // Réinitialisez la deuxième image du sol lorsqu'elle sort de l'écran
+      if (this.ground2.x <= -this.ground2.width) {
+        this.ground2.x = this.ground1.x + this.ground1.width;
+      }
+    
+    
+  
+
   
     if(this.cursors.space.isDown && this.player.body.touching.down ){
       this.player.setVelocityY(-300);
@@ -192,12 +224,15 @@ class GameScene extends Phaser.Scene {
 
   createPlatforms() {
     const platforms = this.physics.add.staticGroup();
-    platforms
-      .create(400, 580, GROUND_KEY)
-      .setScale(2)
-      .refreshBody();
-     return platforms;
-  }
+
+    this.ground1 = platforms.create(0, this.game.config.height, GROUND_KEY).setOrigin(0, 1);
+    this.ground2 = platforms.create(this.ground1.width, this.game.config.height, GROUND_KEY).setOrigin(0, 1);
+
+    this.ground1.setScale(1, 1.2);
+    this.ground2.setScale(1, 1.2);
+    return platforms;
+}
+
 
   createPlayer() {
     const player = this.physics.add.sprite(10, 10, CAT_KEY);
