@@ -12,53 +12,10 @@ import cloud04 from '../../assets/cloud4.png';
 
 const SignInPage = () => {
   clearPage();
-  const main()
+  const main = document.querySelector('main');
+  main.innerHTML += renderMenu();
   renderPageTitle('Sign In');
-  renderForm();
 };
-
-
-function renderForm(){
-    const main = document.querySelector('main');
-    const form = document.createElement('form');
-    main.innerHTML += renderMenu();
-    form.addEventListener('submit', addUser);
-  }
-
-  async function addUser(u) {
-    u.preventDefault();
-
-    const firstname = document.querySelector('#firstname').value;
-    const lastname = document.querySelector('#lastname').value;
-    const email = document.querySelector('#email').value;
-    const password = document.querySelector('#password').value;
-    const confirmPassword = document.querySelector('#confirmPassword').value;
-
-    if (password !== confirmPassword){
-      Navigate('/');
-    }
-    const options = {
-      method: 'POST',
-      body: JSON.stringify({
-        firstname,
-        lastname,
-        email,
-        password
-      }),
-      headers:{
-        'Content-Type': 'application/json',
-      },
-    };
-    const response = await fetch('/api/routes/users.js/', options);
-    
-    if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
-
-    const newUser = await response.json();
-
-    console.log('User : ', newUser);
-
-    Navigate('/');
-  }
 
 function renderMenu(){
   const menu = `
