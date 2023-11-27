@@ -1,18 +1,26 @@
 .form {
-    background-color: skyblue;
-    opacity: 1;
-    width: 500px;
-    height: 500px;
-    margin-left: 500px;
-    text-align: center;
+    position: absolute;
+    top : 35%;
+    left : 38%;
+    margin-left: 300px;
+    margin-right: 750px;
+    padding-left: 10px;
+    padding-top: 15px;
+    padding-right: 10px;
+    background-color: rgba(158, 147, 153, 0.3);
+    
 }
 .input {
     background-color: white;
+    font-size: 25px;
+    margin-bottom: 10px;
     
 }
 .buttonSubmit {
+    margin-left: 145px;
     width : 150px;
-    height: 50px;
+    height: 55px;
+    font-size: 23px;
     border : none;
     background: url("../assets/Button.png");
     background-size: 150px;

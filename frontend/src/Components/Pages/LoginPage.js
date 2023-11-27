@@ -1,7 +1,5 @@
 import { clearPage } from '../../utils/render';
 
-import Navigate from '../Router/Navigate';
-
 import sky from '../../assets/sky.png';
 import sun from '../../assets/sun.png';
 import ground from '../../assets/longGround.png';
@@ -15,8 +13,6 @@ const LoginPage = () => {
   clearPage();
   const main = document.querySelector('main');
   main.innerHTML += renderMenu();
-  Navigate('/');
-  
 };
 
 
