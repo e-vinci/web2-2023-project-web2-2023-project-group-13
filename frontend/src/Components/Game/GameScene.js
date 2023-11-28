@@ -35,6 +35,8 @@ class GameScene extends Phaser.Scene {
     this.sky=undefined;
     this.ground1=undefined;
     this.ground2=undefined;
+    this.bush1=undefined;
+    this.bush2=undefined;
     this.skySpeed = 3;  // Vitesse de défilement du ciel
     this.groundSpeed=5;// Vitesse de défilement du sol
   }
@@ -55,7 +57,8 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
-    
+
+
     // Initialisation des images du ciel
     this.sky1 = this.add.image(0, 0, 'sky');
     this.sky1.setScale(1);// Échelle du ciel (taille d'origine)
@@ -65,26 +68,32 @@ class GameScene extends Phaser.Scene {
     this.sky2.y += 110;  // Décalage vertical de la deuxième image du ciel
     
 
-   // Dans GameScene
-if (!gameConfig.instructionsShown) {
-  this.showInstructions();
-  gameConfig.instructionsShown = true;
-}
     
-    const platform = this.createPlatform();
+   // Dans GameScene
+    if (!gameConfig.instructionsShown) {
+      this.showInstructions();
+      gameConfig.instructionsShown = true;
+    }
+    
+    const platform = this.createPlatforms();
     this.player = this.createPlayer();
     this.scoreLabel = this.createScoreLabel(16, 16, 0);
-    // creatre bush dans le but de test hitBush et mene a gameOver
-     this.bush = this.createBush();
+    // creatre bush dans le but de creer aleztoirement un bush tout les x temps
+    // this.bush =  this.time.addEvent({
+    //   delay:2500,
+    //   callback: this.createBush,
+    //   callbackScope: this,
+    //   loop: true
+    // })
+    this.bush = this.createBush();
     this.physics.add.collider(this.player, platform);
     this.physics.add.collider(this.bush, platform);
-    this.fishs= this.createFishs();
+    this.fishs =  this.createFishs();
     this.physics.add.collider(this.fishs,platform);
     this.physics.add.collider(this.fishs,this.bush);
     this.physics.add.overlap(this.player, this.fishs, this.collectFishs, null, this);
     this.physics.add.overlap(this.player, this.bush, this.hitBush, null, this);
-    this.cursors = this.input.keyboard.createCursorKeys();
-    
+    this.cursors = this.input.keyboard.createCursorKeys();  
     
   }
 
@@ -98,10 +107,10 @@ if (!gameConfig.instructionsShown) {
     cadre.setScale(scaleX, scaleY);
   
    // Ajoutez les images au cadre
-  const poisson = this.add.image(cadre.x - cadre.displayWidth / 2 + 150, cadre.y - cadre.displayHeight / 2 + 150, 'Fish');
-  const buisson = this.add.image(poisson.x + poisson.displayWidth + 70, cadre.y - cadre.displayHeight / 2 + 150, BUISSON_HELP);
-  const fleche = this.add.image(buisson.x + buisson.displayWidth + 70, cadre.y - cadre.displayHeight / 2 + 150, FLECHE_KEY);
-  const chat = this.add.image(fleche.x + fleche.displayWidth + 90, cadre.y - cadre.displayHeight / 2 + 150, CATIO_HELP);
+    const poisson = this.add.image(cadre.x - cadre.displayWidth / 2 + 150, cadre.y - cadre.displayHeight / 2 + 150, 'Fish');
+    const buisson = this.add.image(poisson.x + poisson.displayWidth + 70, cadre.y - cadre.displayHeight / 2 + 150, BUISSON_HELP);
+    const fleche = this.add.image(buisson.x + buisson.displayWidth + 70, cadre.y - cadre.displayHeight / 2 + 150, FLECHE_KEY);
+    const chat = this.add.image(fleche.x + fleche.displayWidth + 90, cadre.y - cadre.displayHeight / 2 + 150, CATIO_HELP);
     // Ajoutez le texte pour chaque image
     const style = { font: '20px Arial', fill: '#000' };
     const poissonText =this.add.text(poisson.x, poisson.y + poisson.displayHeight / 2 + 10, 'Points', style).setOrigin(0.5);
@@ -166,14 +175,13 @@ if (!gameConfig.instructionsShown) {
 
 
   update() {
+
     if (this.gameOver) {
-      //  return;
       // aller sur la nouvelle page game over
      window.location.href= '/gameOver';
+     return;
     }
-
-    
-    
+  
      this.sky1.x -= this.skySpeed;// Déplacement horizontal de la première image du ciel
      this.sky2.x -= this.skySpeed;  // Déplacement horizontal de la deuxième image du ciel
 
@@ -191,30 +199,29 @@ if (!gameConfig.instructionsShown) {
       // Déplacez les deux images du sol
       this.ground1.x -= this.groundSpeed;
       this.ground2.x -= this.groundSpeed;
+
     
       // Réinitialisez la première image du sol lorsqu'elle sort de l'écran
       if (this.ground1.x <= -this.ground1.width) {
         this.ground1.x = this.ground2.x + this.ground2.width;
       }
-    
+
       // Réinitialisez la deuxième image du sol lorsqu'elle sort de l'écran
       if (this.ground2.x <= -this.ground2.width) {
         this.ground2.x = this.ground1.x + this.ground1.width;
       }
     
-    
-  
-
-  
+      
     if(this.cursors.space.isDown && this.player.body.touching.down ){
-      this.player.setVelocityY(-300);
+      this.player.setVelocityY(-350);
+      
     }
     // cette partie du code doit etre supprimer car ce n'est pas le chat qui doit bouger
     //  mais le decor , elle ne sert qu'a tester d'autre fonctionalité 
     if(this.cursors.right.isDown ){
-      this.player.setVelocityX(300);
+      this.player.setVelocityX(350);
     } else if (this.cursors.left.isDown){
-      this.player.setVelocityX(-300);
+      this.player.setVelocityX(-350);
     } else {
       this.player.setVelocityX(0);
     }
@@ -222,14 +229,14 @@ if (!gameConfig.instructionsShown) {
     // this.player.setVelocityX(-300);
     // } else {
     // this.player.setVelocityX(0);
-// }
+    // }
     // 
     if (this.cursors.up.isDown && this.player.body.touching.down ){  
-      this.player.setVelocityY(-300);
+      this.player.setVelocityY(-350);
     }
     else if (this.cursors.down.isDown)
     {
-     this.player.setVelocityY(300);
+     this.player.setVelocityY(350);
     }
   }
 
@@ -241,26 +248,33 @@ if (!gameConfig.instructionsShown) {
 
     this.ground1.setScale(1, 1.2);
     this.ground2.setScale(1, 1.2);
+
     return platforms;
 }
 
 
   createPlayer() {
-    const player = this.physics.add.sprite(100,0, CAT_KEY);
+    const player = this.physics.add.sprite(100,100, CAT_KEY);
     player
       .setBounce(0.1)
-      .setScale(0.3);
+      .setScale(0.3);  
       return player;
   }
 
   /* totalement a recréer tout ce qui est poisson */
 //  a revoir //
   createFishs() {
+     const randomX = Phaser.Math.Between(0, this.game.config.width);
+
     const fishs = this.physics.add.group({
       key: FISH_KEY,
       repeat: 2,
-      setXY: { x: 400, y: 300, stepX: 50 },
+      setXY: { x: randomX, y: 550, stepX: 50 },
+    });
 
+    fishs.children.iterate(fish => {
+      fish.setSize(10,10,10,10);
+      // fish.setCollideWorldBounds(true);
     });
 
     return fishs;
@@ -269,15 +283,12 @@ if (!gameConfig.instructionsShown) {
   collectFishs(player, fish) {
     fish.disableBody(true, true);
     this.scoreLabel.add(1);
-    // cette partie du code sert a remetrre des posson qui ont ete manger
-    // exactement au meme endroit et au meme nombre
-    // if (this.fishs.countActive(true) === 0) {
-    //   this.fishs.children.iterate((child) => {
-    //     child.enableBody(true, child.x, 0, true, true);
-    //   });
+    if (this.fishs.countActive(true) === 0) {
+      this.fishs.children.iterate((child) => {
+      child.enableBody(true, child.x, 0, true, true);
+    });   
   }
-
-  
+}
 
   createScoreLabel(x, y, score) {
     const style = { fontSize: '32px', fill: '#000' };
@@ -287,21 +298,42 @@ if (!gameConfig.instructionsShown) {
     return label;
   }
 
-/* totalement a recréer lors de la creation du decor 
-mouvant cette metode sert uniquement a voir si la methode 
-hitBush fonctionne 
-*/
+  /* totalement a recréer lors de la creation du decor 
+  mouvant cette metode sert uniquement a voir si la methode 
+  hitBush fonctionne 
+  */
+
+
+
   createBush(){
-    const bush = this.physics.add.group();
-    // const bush1 = bush.create(229, 0.5, BUSH_KEY)
-    const bush2 = bush.create(700, 0.5, BUSH_KEY)
-    // bush1.setScale(0.2);
-    bush2.setScale(0.2);
-    return bush;
+
+    // const randomX = Phaser.Math.Between(0, 700);
+    const bushs = this.physics.add.group();
+    const bush1 = bushs.create(300, 510, BUSH_KEY);
+    const bush2 = bushs.create(700, 510, BUSH_KEY);
+    // randomx permet de creer de maniere aleatoire un bush
+    // const bush1 = bush.create(randomX, 0.5, BUSH_KEY)
+    bush1
+      .setScale(0.2)
+      .setOrigin(0,1)
+      .setCollideWorldBounds(true);
+    bush2
+      .setScale(0.2)
+      .setOrigin(0,1)
+      .setCollideWorldBounds(true);
+
+
+    // this.time.delayedCall(5000, () => {
+    //   bush1.destroy();
+    //   bush2.destroy();
+    // }, null, this);
+
+    return bushs;
   }
 
   hitBush() {
     this.scoreLabel.setText(`GAME OVER  \nYour Score = ${this.scoreLabel.score}`);
+    this.physics.pause();
     this.gameOver = true;
   }
 }
