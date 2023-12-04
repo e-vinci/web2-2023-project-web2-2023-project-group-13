@@ -23,13 +23,14 @@ const FLECHE_KEY='fleche';
 const CATIO_HELP='catHelp';
 const BUISSON_HELP='buisson';
 
-
 class GameScene extends Phaser.Scene {
   constructor() {
     super('game-scene');
     this.player = undefined;
     this.cursors = undefined;
     this.scoreLabel = undefined;
+    this.timer = 0;
+    this.timerText = undefined;
     this.fishs = undefined;
     this.bush= undefined;
     this.gameOver = false;
@@ -39,8 +40,6 @@ class GameScene extends Phaser.Scene {
     this.skySpeed = 3;  // Vitesse de défilement du ciel
     this.groundSpeed=5;// Vitesse de défilement du sol
   }
-
-
 
   preload() {
     this.load.image(SKY_KEY, skyAsset);
@@ -67,26 +66,22 @@ class GameScene extends Phaser.Scene {
     this.sky2.setScale(1);// Échelle du ciel (taille d'origine)
     this.sky1.y += 110;  // Décalage vertical de la première image du ciel
     this.sky2.y += 110;  // Décalage vertical de la deuxième image du ciel
-    
 
-   // Dans GameScene
+    // Dans GameScene
     if (!gameConfig.instructionsShown) {
       this.showInstructions();
       gameConfig.instructionsShown = true;
     }
-    
     const platforms = this.createPlatforms();
     this.player = this.createPlayer();
     this.scoreLabel = this.createScoreLabel(16, 16, 0);
-    // creatre bush dans le but de test hitBush et mene a gameOver
-     this.bush = this.createBush();
+    // create bush dans le but de test hitBush et mene a gameOver
+    this.bush = this.createBush();
     this.physics.add.collider(this.player, platforms);
-      this.physics.add.collider(this.bush, platforms);
+    this.physics.add.collider(this.bush, platforms);
     // this.physics.add.overlap(this.player, this.fishs, this.collectFish, null, this);
-     this.physics.add.overlap(this.player, this.bush, this.hitBush, null, this);
+    this.physics.add.overlap(this.player, this.bush, this.hitBush, null, this);
     this.cursors = this.input.keyboard.createCursorKeys();
-    
-    
   }
 
   showInstructions() {
@@ -161,15 +156,35 @@ class GameScene extends Phaser.Scene {
       chatText.destroy();
       poissonText.destroy();
       flecheText.destroy();
-
+      // Commencer le timer quand on clique sur le bouton OK
+      this.startTimer();
     });
   }
 
+  startTimer() {
+    let seconds = 0;
+    this.timerText = this.add.text(16, 50, 'Timer: 0', { fontSize: '32px', fill: '#000' });
+    this.timer = this.time.addEvent({
+      delay: 1000, // Mise à jour chaque seconde
+      callback: () => {
+        if (!this.gameOver) {
+          seconds+=1;
+          this.timerText.setText(`Timer: ${seconds}`);
+        } else {
+          // Arrêtez le timer lorsque le jeu est terminé
+          this.timer.destroy();
+          this.timer = null;
+        }
+      },
+      loop: true, // Répétez indéfiniment
+    });
+  }
 
   update() {
-    if (this.gameOver) {
-      // return;
+    if (this.gameOver && this.timer !== null) {
       // aller sur la nouvelle page game over
+      this.timer.destroy();
+      this.timer = null;
       window.location.href= '/gameOver';
     }
 
@@ -208,6 +223,9 @@ class GameScene extends Phaser.Scene {
     if (this.cursors.up.isDown && this.player.body.touching.down ){  
       this.player.setVelocityY(-300);
     }
+    if (this.cursors.left.isDown && this.player.body.touching.down ){  
+      this.player.setVelocityX(300);
+    }
     if (this.cursors.down.isDown && !this.player.body.touching.down)
     {
     this.player.setVelocityY(300);
@@ -241,6 +259,13 @@ class GameScene extends Phaser.Scene {
 
     this.anims.create({
       key: 'walk',
+      frames: this.anims.generateFrameNumbers('catio', {start: 4, end: 5}),
+      frameRate: 8,
+      repeat: -1
+    })
+
+    this.anims.create({
+      key: 'left',
       frames: this.anims.generateFrameNumbers('catio', {start: 4, end: 5}),
       frameRate: 8,
       repeat: -1
@@ -295,6 +320,7 @@ class GameScene extends Phaser.Scene {
     this.add.existing(label);
     return label;
   }
+
 
 /* totalement a recréer lors de la creation du decor 
 mouvant cette metode sert uniquement a voir si la methode 
