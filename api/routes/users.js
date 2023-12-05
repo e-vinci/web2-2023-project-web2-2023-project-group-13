@@ -1,5 +1,5 @@
 const express = require('express');
-
+const { register, login } = require('../models/users');
 const router = express.Router();
 
 let Table = [];
@@ -9,23 +9,10 @@ router.get('/', (req, res) => {
   res.json({ users: [{ name: 'e-baron' }] });
 });
 
-router.post('/addUser', (req,res) => {
+router.post('/addUser', async (req,res) => {
+  console.log('/addUser');
+  register(firstname,lastname, email, password); 
 
-  const lastItemIndex = Table?.length !== 0 ? Table.length - 1 : undefined;
-  const lastId = lastItemIndex !== undefined ? Table[lastItemIndex]?.id : 0;
-  const nextId = lastId + 1;
-
-  const newUser = {
-    id : nextId,
-    firstname : firstname,
-    lastname : lastname,
-    email : email,
-    password : password
-  };
-  Table.push(newUser);
-
-  res.json(newUser);
-  console.log(Table[nextId]);
 })
 
 module.exports = router;

@@ -39,20 +39,20 @@ async function login(username, password) {
   return authenticatedUser;
 }
 
-async function register(username, password) {
-  const userFound = readOneUserFromUsername(username);
+async function register(firstname,lastname,email, password) {
+  const userFound = readOneUserFromUsername(email);
   if (userFound) return undefined;
 
-  await createOneUser(username, password);
+  await createOneUser(firstname, lastname, email, password);
 
   const token = jwt.sign(
-    { username }, // session data added to the payload (payload : part 2 of a JWT)
+    { email }, // session data added to the payload (payload : part 2 of a JWT)
     jwtSecret, // secret used for the signature (signature part 3 of a JWT)
     { expiresIn: lifetimeJwt }, // lifetime of the JWT (added to the JWT payload)
   );
 
   const authenticatedUser = {
-    username,
+    email,
     token,
   };
 
@@ -67,14 +67,16 @@ function readOneUserFromUsername(username) {
   return users[indexOfUserFound];
 }
 
-async function createOneUser(username, password) {
+async function createOneUser(firstname,lastname,email,password) {
   const users = parse(jsonDbPath, defaultUsers);
 
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
   const createdUser = {
     id: getNextId(),
-    username,
+    firstname,
+    lastname,
+    email,
     password: hashedPassword,
   };
 

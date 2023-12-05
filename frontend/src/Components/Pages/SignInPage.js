@@ -83,10 +83,10 @@ async function addUser(u) {
       password
     }),
     headers:{
-      'Content-Type': 'application/json',
+      'Content-Type' : 'application/json',
     },
   };
-  const response = await fetch('/api/routes/users.js/', options);
+  const response = await fetch('/api/routes/users.js/addUser', options);
   
   if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
 
@@ -120,11 +120,6 @@ function renderMenu(){
     </div>
     <div id="cloud04Container">
       <img id="cloud04Image" src="${cloud04}">
-    </div>
-    <form>
-      <input type="text" id="firstname" placeholder="firstname">
-      <input type="submit" id="submit">
-    </form>
     `
     return menu;
   }

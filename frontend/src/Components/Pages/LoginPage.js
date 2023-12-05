@@ -41,7 +41,6 @@ function renderForm(){
   main.appendChild(form);
 }
 
-
 function renderMenu(){
   const menu = `
     <div id="skyContainer">
