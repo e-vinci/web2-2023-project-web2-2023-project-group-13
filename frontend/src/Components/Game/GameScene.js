@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import ScoreLabel from './ScoreLabel';
+import TimerLabel from './TimerLabel';
 import gameConfig  from "./gameConfig";
 
 import skyAsset from '../../assets/sky2.jpg';
@@ -29,6 +30,7 @@ class GameScene extends Phaser.Scene {
     this.player = undefined;
     this.cursors = undefined;
     this.scoreLabel = undefined;
+    this.timerLabel = undefined;
     this.timer = 0;
     this.timerText = undefined;
     this.fishs = undefined;
@@ -75,6 +77,7 @@ class GameScene extends Phaser.Scene {
     const platforms = this.createPlatforms();
     this.player = this.createPlayer();
     this.scoreLabel = this.createScoreLabel(16, 16, 0);
+    this.timerLabel = this.createTimerLabel(16, 18, 0);
     // create bush dans le but de test hitBush et mene a gameOver
     this.bush = this.createBush();
     this.physics.add.collider(this.player, platforms);
@@ -187,9 +190,6 @@ class GameScene extends Phaser.Scene {
       this.timer = null;
       window.location.href= '/gameOver';
     }
-
-    
-    
     this.sky1.x -= this.skySpeed;// Déplacement horizontal de la première image du ciel
     this.sky2.x -= this.skySpeed;  // Déplacement horizontal de la deuxième image du ciel
 
@@ -202,7 +202,6 @@ class GameScene extends Phaser.Scene {
     if (this.sky2.x <= -this.sky2.width) {
         this.sky2.x = this.sky1.x + this.sky1.width;
     }
-    
     // Déplacez les deux images du sol
     this.ground1.x -= this.groundSpeed;
     this.ground2.x -= this.groundSpeed;
@@ -211,12 +210,10 @@ class GameScene extends Phaser.Scene {
     if (this.ground1.x <= -this.ground1.width) {
       this.ground1.x = this.ground2.x + this.ground2.width;
     }
-  
     // Réinitialisez la deuxième image du sol lorsqu'elle sort de l'écran
     if (this.ground2.x <= -this.ground2.width) {
       this.ground2.x = this.ground1.x + this.ground1.width;
     }
-
     if(this.cursors.space.isDown && this.player.body.touching.down ){
       this.player.setVelocityY(-300);
     } 
@@ -321,6 +318,14 @@ class GameScene extends Phaser.Scene {
     return label;
   }
 
+  createTimerLabel (x, y, timer) {
+    const style = { fontSize: '32px', fill: '#000'};
+    const label = new TimerLabel(this, x, y, timer, style);
+    console.log('timer:',label);
+    this.add.existing(label);
+    return label;
+  }
+
 
 /* totalement a recréer lors de la creation du decor 
 mouvant cette metode sert uniquement a voir si la methode 
@@ -334,7 +339,6 @@ hitBush fonctionne
   }
 
   hitBush() {
-    this.scoreLabel.setText(`GAME OVER : ( \nYour Score = ${this.scoreLabel.score}`);
     this.gameOver = true;
   }
 }
