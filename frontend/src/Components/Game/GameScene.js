@@ -5,7 +5,7 @@ import gameConfig  from "./gameConfig";
 import skyAsset from '../../assets/sky2.jpg';
 import platformAsset from '../../assets/ground.png';
 import fishAsset from '../../assets/Fish.png';
-import catAsset from '../../assets/catio_play.png';
+// import catAsset from '../../assets/catio_play.png';
 import bushAsset from '../../assets/bush_test.png';
 import cadreAsset from '../../assets/Button.png';
 import flecheAsset from '../../assets/fleche_haut.png';
@@ -14,7 +14,7 @@ import buissonAsset from '../../assets/buisson_help.png';
 import catWalk from '../../assets/spritesheetTEST6.png';
 
 const GROUND_KEY = 'ground';
-const CAT_KEY = 'catio_play';
+// const CAT_KEY = 'catio_play';
 const FISH_KEY = 'Fish';
 const SKY_KEY = 'sky';
 const BUSH_KEY = 'bush';
@@ -47,7 +47,7 @@ class GameScene extends Phaser.Scene {
     this.load.image(SKY_KEY, skyAsset);
     this.load.image(GROUND_KEY, platformAsset);
     this.load.image(FISH_KEY, fishAsset);
-    this.load.image(CAT_KEY, catAsset);
+    // this.load.image(CAT_KEY, catAsset);
     this.load.image(BUSH_KEY,bushAsset);
     this.load.image(FLECHE_KEY, flecheAsset);
     this.load.image(CADRE_KEY,cadreAsset);
@@ -301,11 +301,11 @@ class GameScene extends Phaser.Scene {
   /* totalement a recréer tout ce qui est poisson */
 //  a revoir //
   createFishs() {
-    //  const randomX = Phaser.Math.Between(0, this.game.config.width);
+      const randomX = Phaser.Math.Between(0, 2);
     const fishs = this.physics.add.group({
       key: FISH_KEY,
-      repeat: 2,
-      setXY: { x: 500, y: 650, stepX: 100 },
+      repeat: randomX,
+      setXY: { x: 800, y: 650, stepX: 100 },
 
     });
 
@@ -313,7 +313,7 @@ class GameScene extends Phaser.Scene {
       fish.setOrigin(1,1);      
       fish.setCollideWorldBounds(true);
       fish.setSize(1,100,1,1);
-      this.time.delayedCall(1200, () => {
+      this.time.delayedCall(1600, () => {
       fish.destroy();
     }, null, this);
 
