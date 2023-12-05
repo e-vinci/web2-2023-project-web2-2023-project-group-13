@@ -86,9 +86,7 @@ async function addUser(u) {
       'Content-Type' : 'application/json',
     },
   };
-  const response = await fetch('/api/routes/users.js/addUser', options);
   
-  if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
 
   const newUser = await response.json();
 

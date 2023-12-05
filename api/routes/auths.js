@@ -10,7 +10,7 @@ router.post('/register', async (req, res) => {
 
   if (!username || !password) return res.sendStatus(400); // 400 Bad Request
 
-  const authenticatedUser = await register(username, password);
+  const authenticatedUser = await register(firstname, lastname, email, password);
 
   if (!authenticatedUser) return res.sendStatus(409); // 409 Conflict
 
