@@ -11,7 +11,7 @@ import cloud02 from '../../assets/cloud2.png';
 import cloud03 from '../../assets/cloud3.png';
 import cloud04 from '../../assets/cloud4.png';
 
-const HighScorePage = () => {
+const PersonnalScorePage = () => {
   clearPage();
   clearPage();
   // get main
@@ -19,15 +19,13 @@ const HighScorePage = () => {
   // add menu to main
   main.innerHTML += renderContent();
   // get buttons
-  const personnalButton = document.querySelector('#personnalButton');
   const timerButton = document.querySelector('#timerButton');
   const fishButton = document.querySelector('#fishButton');
-  const homeButton = document.querySelector('#homeButton');
+  const backButton = document.querySelector('#backButton');
   // add eventListener to the buttons
-  personnalButton?.addEventListener('click',redirectToPersonnalScorePage);
   timerButton?.addEventListener('click',redirectToTimerPage);
   fishButton?.addEventListener('click',redirectToFishPage);
-  homeButton?.addEventListener('click',redirectToHome);
+  backButton?.addEventListener('click',redirectBack);
 };
 
 function renderContent(){
@@ -40,7 +38,7 @@ function renderContent(){
       </div>
       <div id="textContainer">
         <h1 id="pageTitle">
-            BEST SCORES OF ALL TIME!  
+            BEST PERSONNAL SCORES
         </h1>
       </div>
       <div id="catioContainer">
@@ -62,33 +60,27 @@ function renderContent(){
         <img id="cloud04Image" src="${cloud04}">
       </div>
       <div id="buttonContainer">
-        <button id="personnalButton" class="retro-btn">PERSONNAL SCORES</button>
-        <br>
-        <button id="timerButton" class="retro-btn">TIMERS</button>
+        <button id="timerButton" class="retro-btn">TIMER</button>
         <br>
         <button id="fishButton" class="retro-btn">FISH</button>
         <br>
-        <button id="homeButton" class="retro-btn">BACK TO HOMEPAGE</button>
+        <button id="backButton" class="retro-btn">GO BACK</button>
         <br>
     </div>
   `;
   return content;
 }
 
-function redirectToPersonnalScorePage(){
-  Navigate('/personnal');
-}
-
 function redirectToTimerPage(){
-  Navigate('/timer');
+  Navigate('/personnalTimer');
 }
 
 function redirectToFishPage(){
-  Navigate('/fish');
+  Navigate('/personnalFish');
 }
 
-function redirectToHome(){
-  Navigate('/');
+function redirectBack(){
+  Navigate('/highscore');
 }
 
-export default HighScorePage;
+export default PersonnalScorePage;
