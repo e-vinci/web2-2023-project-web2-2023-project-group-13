@@ -1,4 +1,7 @@
+import addUser from '../../models/users'
+
 import { clearPage} from '../../utils/render';
+
 import Navigate from '../Router/Navigate'
 
 import sky from '../../assets/sky.png';
@@ -60,39 +63,19 @@ function renderForm(){
   form.appendChild(confirmPassword);
   form.appendChild(submit);
   main.appendChild(form);
-  form.addEventListener('submit', addUser);
+  form.addEventListener('submit', addPlayer);
 }
-async function addUser(u) {
-  u.preventDefault();
-
+function addPlayer(){
   const firstname = document.querySelector('#firstname').value;
   const lastname = document.querySelector('#lastname').value;
   const email = document.querySelector('#email').value;
   const password = document.querySelector('#password').value;
   const confirmPassword = document.querySelector('#confirmPassword').value;
-
   if (password !== confirmPassword){
     Navigate('/');
   }
-  const options = {
-    method: 'POST',
-    body: JSON.stringify({
-      firstname,
-      lastname,
-      email,
-      password
-    }),
-    headers:{
-      'Content-Type' : 'application/json',
-    },
-  };
-  
-
-  const newUser = await response.json();
-
-  console.log('User : ', newUser);
-
-  Navigate('/');
+  addUser(firstname,lastname,email,password);
+  Navigate('/login');
 }
 function renderMenu(){
   const menu = `

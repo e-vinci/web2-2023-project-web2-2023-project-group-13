@@ -1,5 +1,15 @@
 const table = [];
 
-const addUser = (user) => table.push(user);
+const addUser = (firstname, lastname, email, password,) => {
+    const user = {
+        firstname,
+        lastname,
+        email,
+        password
+    }
+    table.push(user);
+    console.log(table);
+}
+ 
 
-export {addUser};
+export default addUser;
