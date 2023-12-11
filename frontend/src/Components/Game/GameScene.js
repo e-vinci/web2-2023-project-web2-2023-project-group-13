@@ -5,8 +5,8 @@ import gameConfig  from "./gameConfig";
 import skyAsset from '../../assets/sky2.jpg';
 import platformAsset from '../../assets/ground.png';
 import fishAsset from '../../assets/Fish.png';
-import catAsset from '../../assets/cat.png';
-import bushAsset from '../../assets/bush.png';
+// import catAsset from '../../assets/catio_play.png';
+import bushAsset from '../../assets/bush_test.png';
 import cadreAsset from '../../assets/Button.png';
 import flecheAsset from '../../assets/fleche_haut.png';
 import catioAsset from '../../assets/catio_help.png'
@@ -14,7 +14,7 @@ import buissonAsset from '../../assets/buisson_help.png';
 import catWalk from '../../assets/spritesheetTEST6.png';
 
 const GROUND_KEY = 'ground';
-const CAT_KEY = 'cat';
+// const CAT_KEY = 'catio_play';
 const FISH_KEY = 'Fish';
 const SKY_KEY = 'sky';
 const BUSH_KEY = 'bush';
@@ -32,20 +32,21 @@ class GameScene extends Phaser.Scene {
     this.timer = 0;
     this.timerText = undefined;
     this.fishs = undefined;
-    this.bush= undefined;
     this.gameOver = false;
     this.sky=undefined;
     this.ground1=undefined;
     this.ground2=undefined;
-    this.skySpeed = 3;  // Vitesse de défilement du ciel
-    this.groundSpeed=5;// Vitesse de défilement du sol
+    this.bushs=undefined;
+    this.skySpeed = 5;  // Vitesse de défilement du ciel
+    this.groundSpeed=8;// Vitesse de défilement du sol
+    this.gameStarted=false;
   }
 
   preload() {
     this.load.image(SKY_KEY, skyAsset);
     this.load.image(GROUND_KEY, platformAsset);
     this.load.image(FISH_KEY, fishAsset);
-    this.load.image(CAT_KEY, catAsset);
+    // this.load.image(CAT_KEY, catAsset);
     this.load.image(BUSH_KEY,bushAsset);
     this.load.image(FLECHE_KEY, flecheAsset);
     this.load.image(CADRE_KEY,cadreAsset);
@@ -58,7 +59,11 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
-    
+
+    this.timing = 0;
+    this.timingFish = 0;
+
+
     // Initialisation des images du ciel
     this.sky1 = this.add.image(0, 0, 'sky');
     this.sky1.setScale(1);// Échelle du ciel (taille d'origine)
@@ -72,16 +77,22 @@ class GameScene extends Phaser.Scene {
       this.showInstructions();
       gameConfig.instructionsShown = true;
     }
-    const platforms = this.createPlatforms();
+    
+    const platform = this.createPlatforms();
     this.player = this.createPlayer();
     this.scoreLabel = this.createScoreLabel(16, 16, 0);
-    // create bush dans le but de test hitBush et mene a gameOver
-    this.bush = this.createBush();
-    this.physics.add.collider(this.player, platforms);
-    this.physics.add.collider(this.bush, platforms);
-    // this.physics.add.overlap(this.player, this.fishs, this.collectFish, null, this);
-    this.physics.add.overlap(this.player, this.bush, this.hitBush, null, this);
-    this.cursors = this.input.keyboard.createCursorKeys();
+ 
+    this.bushs = this.physics.add.group();
+    this.physics.add.collider(this.player, platform);
+    this.physics.add.collider(this.bushs, platform);
+    this.fishs =  this.createFishs();
+  
+    this.physics.add.collider(this.fishs,platform);
+    this.physics.add.collider(this.fishs,this.bush);
+    this.physics.add.overlap(this.player, this.fishs, this.collectFishs, null, this);
+    this.physics.add.overlap(this.player, this.bushs, this.hitBush, null, this);
+    this.cursors = this.input.keyboard.createCursorKeys();  
+    
   }
 
   showInstructions() {
@@ -94,10 +105,10 @@ class GameScene extends Phaser.Scene {
     cadre.setScale(scaleX, scaleY);
   
    // Ajoutez les images au cadre
-  const poisson = this.add.image(cadre.x - cadre.displayWidth / 2 + 150, cadre.y - cadre.displayHeight / 2 + 150, 'Fish');
-  const buisson = this.add.image(poisson.x + poisson.displayWidth + 70, cadre.y - cadre.displayHeight / 2 + 150, BUISSON_HELP);
-  const fleche = this.add.image(buisson.x + buisson.displayWidth + 70, cadre.y - cadre.displayHeight / 2 + 150, FLECHE_KEY);
-  const chat = this.add.image(fleche.x + fleche.displayWidth + 90, cadre.y - cadre.displayHeight / 2 + 150, CATIO_HELP);
+    const poisson = this.add.image(cadre.x - cadre.displayWidth / 2 + 150, cadre.y - cadre.displayHeight / 2 + 150, 'Fish');
+    const buisson = this.add.image(poisson.x + poisson.displayWidth + 70, cadre.y - cadre.displayHeight / 2 + 150, BUISSON_HELP);
+    const fleche = this.add.image(buisson.x + buisson.displayWidth + 70, cadre.y - cadre.displayHeight / 2 + 150, FLECHE_KEY);
+    const chat = this.add.image(fleche.x + fleche.displayWidth + 90, cadre.y - cadre.displayHeight / 2 + 150, CATIO_HELP);
     // Ajoutez le texte pour chaque image
     const style = { font: '20px Arial', fill: '#000' };
     const poissonText =this.add.text(poisson.x, poisson.y + poisson.displayHeight / 2 + 10, 'Points', style).setOrigin(0.5);
@@ -186,10 +197,54 @@ class GameScene extends Phaser.Scene {
       this.timer.destroy();
       this.timer = null;
       window.location.href= '/gameOver';
+      this.gameStarted=true;
+
+    };
+  }
+
+    Start(){
+      this.gameStarted=true;
     }
 
-    
-    
+
+  
+
+  update() {
+    this.input.on('pointerdown', this.Start, this);
+
+    if (!this.gameStarted) {
+      return; 
+    }
+
+    if (this.gameOver) {
+      // aller sur la nouvelle page game over
+      this.timer.destroy();
+      this.timer = null;
+      window.location.href= '/gameOver';
+      }
+   
+    this.timing += this.groundSpeed * 0.08;
+    let x = Phaser.Math.Between(70, 180);
+    if(this.timing>=x){
+      this.createBush(); 
+      this.timing=0;
+      x = Phaser.Math.Between(70, 180)
+    } 
+
+
+    this.timingFish += this.groundSpeed * 0.08; 
+    if(this.timingFish>=100){
+      this.fishs =  this.createFishs();
+      this.timingFish=0;
+    }
+
+    // this.physics.add.overlap(this.fishs, this.setCollideWorldBounds, this.fishs.destroy(), null, this)
+
+    this.physics.add.overlap(this.player, this.fishs, this.collectFishs, null, this);
+
+    Phaser.Actions.IncX(this.bushs.getChildren(), -this.groundSpeed);
+    Phaser.Actions.IncX(this.fishs.getChildren(), -this.groundSpeed);
+
     this.sky1.x -= this.skySpeed;// Déplacement horizontal de la première image du ciel
     this.sky2.x -= this.skySpeed;  // Déplacement horizontal de la deuxième image du ciel
 
@@ -228,7 +283,7 @@ class GameScene extends Phaser.Scene {
     }
     if (this.cursors.down.isDown && !this.player.body.touching.down)
     {
-    this.player.setVelocityY(300);
+     this.player.setVelocityY(300);
     }
     if(this.player.body.touching.down){
     this.player.anims.play('walk', true);
@@ -246,6 +301,7 @@ class GameScene extends Phaser.Scene {
 
     this.ground1.setScale(1, 1.2);
     this.ground2.setScale(1, 1.2);
+
     return platforms;
 }
 
@@ -255,7 +311,8 @@ class GameScene extends Phaser.Scene {
     const player = this.physics.add.sprite(100, 450, 'catio');
     player
       .setBounce(0.1)
-      .setScale(0.3);
+      .setScale(0.3)  
+      ;
 
     this.anims.create({
       key: 'walk',
@@ -282,36 +339,44 @@ class GameScene extends Phaser.Scene {
   }
 
   /* totalement a recréer tout ce qui est poisson */
+//  a revoir //
+  createFishs() {
+      const randomX = Phaser.Math.Between(0, 2);
+    const fishs = this.physics.add.group({
+      key: FISH_KEY,
+      repeat: randomX,
+      setXY: { x: 800, y: 650, stepX: 100 },
 
-  // createFish() {
-  //   const fishs = this.physics.add.group({
-  //     key: FISH_KEY,
-  //     repeat: 11,
-  //     setXY: { x: 12, y: 0, stepX: 70 },
-  //   });
+    });
 
-  //   // fishs.children.iterate((child) => {
-  //   //   child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-  //   // });
+    fishs.children.iterate(fish => {
+      fish.setOrigin(1,1);      
+      fish.setCollideWorldBounds(true);
+      fish.setSize(1,100,1,1);
+      this.time.delayedCall(1600, () => {
+      fish.destroy();
+    }, null, this);
 
-  //   return fishs;
-  // }
+    });
 
-  // collectFish(player, fish) {
-  //   fish.disableBody(true, true);
-  //   this.scoreLabel.add(1);
-  //   if (this.fishs.countActive(true) === 0) {
-  //     this.fishs.children.iterate((child) => {
-  //       child.enableBody(true, child.x, 0, true, true);
-  //     });
-  //   }
+    
+ 
 
-  // }
 
-  // collectFish(player,fish) {
-  //   fish.disableBody(true,true);
-  //   this.scoreLabel.add(1);
-  // }
+    return fishs;
+  }
+
+  collectFishs( player, fish) {
+    fish.disableBody(true, true);
+    this.scoreLabel.add(1);
+      // if (this.fishs.countActive(true) === 0) {
+      //   this.fishs.children.iterate((child) => {
+      //   child.enableBody(true, child.x, 0, true, true);
+      // });   
+    // }
+  }
+
+  
 
   createScoreLabel(x, y, score) {
     const style = { fontSize: '32px', fill: '#000' };
@@ -321,22 +386,26 @@ class GameScene extends Phaser.Scene {
     return label;
   }
 
-
-/* totalement a recréer lors de la creation du decor 
-mouvant cette metode sert uniquement a voir si la methode 
-hitBush fonctionne 
-*/
   createBush(){
-    const bush = this.physics.add.sprite(300, 0.5, BUSH_KEY);
-    bush.setScale(0.3);
-    bush.setCollideWorldBounds(true);
-    return bush;
+    const bush1 = this.bushs.create(900, 550, BUSH_KEY);
+     bush1
+      .setScale(0.2)
+      .setOrigin(0,1)
+      ;
+
+    this.time.delayedCall(3000, () => {
+      bush1.destroy();
+    }, null, this);
+
+    return this.bush1;
   }
 
   hitBush() {
-    this.scoreLabel.setText(`GAME OVER : ( \nYour Score = ${this.scoreLabel.score}`);
+    this.scene.pause();
     this.gameOver = true;
+    this.scoreLabel.setText(`GAME OVER  \nYour Score = ${this.scoreLabel.score}`);
   }
+
 }
 
 export default GameScene;
