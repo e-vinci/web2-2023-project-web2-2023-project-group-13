@@ -1,3 +1,83 @@
+.form {
+    position: absolute;
+    top : 35%;
+    left : 38%;
+    margin-left: 300px;
+    margin-right: 750px;
+    padding-left: 10px;
+    padding-top: 15px;
+    padding-right: 10px;
+    background-color: rgba(158, 147, 153, 0.3);
+    
+}
+.input {
+    background-color: white;
+    font-size: 25px;
+    margin-bottom: 10px;
+    
+}
+#connected{
+  position : absolute;
+  top : 50%;
+  left : 35%;
+  text-align:center;
+  font-size: 40px;
+}
+#backButtonContainer {
+  position: absolute;
+  top: 5%; 
+  left: 0%; 
+  text-align: center;
+}
+#logoutButtonContainer {
+  position: absolute;
+  top: 60%; 
+  left: 35%; 
+  text-align: center;
+}
+#logoutButton{
+  margin-left: 145px;
+  width : 150px;
+  height: 50px;;
+  font-size: 23px;
+  border : none;
+  background: url("../assets/Button.png");
+  background-size: 150px;
+}
+#errorMessage{
+  position: absolute;
+  top: 80%;
+  left: 57%;
+  text-align: center;
+  font-size: 30px;
+  color : red;
+}
+#errorMessage2{
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  text-align: center;
+  font-size: 30px;
+  color : red;
+}
+.buttonSubmit {
+    margin-left: 145px;
+    width : 150px;
+    height: 50px;;
+    font-size: 23px;
+    border : none;
+    background: url("../assets/Button.png");
+    background-size: 150px;
+}
+#backButton {
+    margin-left: 145px;
+    width : 150px;
+    height: 50px;;
+    font-size: 23px;
+    border : none;
+    background: url("../assets/Button.png");
+    background-size: 150px;
+}
 /*********************************************/
 /*Retro Font*/
 /*@font-face {
