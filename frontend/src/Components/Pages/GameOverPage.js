@@ -29,8 +29,8 @@ function renderContent(){
             <img id="skyImage" src="${sky}">
             <div id="textContainerGameOver">
                 <h1 class=gameOverFont>GAME OVER!</h1>
-                <p class="pGameOverFont"> Timer : </p>
-                <p class="pGameOverFont"> FISH : </p>
+                <p class="pGameOverFont"> Timer : ${localStorage.getItem('timer')}</p>
+                <p class="pGameOverFont"> Fish : ${localStorage.getItem('fish')} </p>
             </div>
             <div id="buttonContainer">
                 <button id="replayButton" class="gameoverButton">REPLAY</button>
@@ -57,14 +57,20 @@ function renderContent(){
     return content;
 }
 function redirectGamePage(){
+    localStorage.removeItem('timer');
+    localStorage.removeItem('fish');
     Navigate('/game');
 }
 
 function redirectToHomePage(){
+    localStorage.removeItem('timer');
+    localStorage.removeItem('fish');
     Navigate('/');
 }
 
 function redirectHighScorePage(){
+    localStorage.removeItem('timer');
+    localStorage.removeItem('fish');
     Navigate('/highscore');
 }
 

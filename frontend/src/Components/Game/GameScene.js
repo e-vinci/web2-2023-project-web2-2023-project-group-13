@@ -331,10 +331,11 @@ class GameScene extends Phaser.Scene {
     });
     return fishs;
   }
- 
+
   collectFishs( player, fish) {
     fish.disableBody(true, true);
     this.scoreLabel.add(1);
+    localStorage.setItem('fish',this.scoreLabel.score);
       // if (this.fishs.countActive(true) === 0) {
       //   this.fishs.children.iterate((child) => {
       //   child.enableBody(true, child.x, 0, true, true);
@@ -388,6 +389,7 @@ hitBush fonctionne
     if(this.gameStarted){
       this.timer+=1;
       this.timerLabel.setTimer(this.timer);
+      localStorage.setItem('timer',this.timer);
     }
   }
 
