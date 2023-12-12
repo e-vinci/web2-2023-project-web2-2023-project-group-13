@@ -16,7 +16,60 @@
     margin-bottom: 10px;
     
 }
+#connected{
+  position : absolute;
+  top : 50%;
+  left : 35%;
+  text-align:center;
+  font-size: 40px;
+}
+#backButtonContainer {
+  position: absolute;
+  top: 5%; 
+  left: 0%; 
+  text-align: center;
+}
+#logoutButtonContainer {
+  position: absolute;
+  top: 60%; 
+  left: 35%; 
+  text-align: center;
+}
+#logoutButton{
+  margin-left: 145px;
+  width : 150px;
+  height: 50px;;
+  font-size: 23px;
+  border : none;
+  background: url("../assets/Button.png");
+  background-size: 150px;
+}
+#errorMessage{
+  position: absolute;
+  top: 80%;
+  left: 57%;
+  text-align: center;
+  font-size: 30px;
+  color : red;
+}
+#errorMessage2{
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  text-align: center;
+  font-size: 30px;
+  color : red;
+}
 .buttonSubmit {
+    margin-left: 145px;
+    width : 150px;
+    height: 50px;;
+    font-size: 23px;
+    border : none;
+    background: url("../assets/Button.png");
+    background-size: 150px;
+}
+#backButton {
     margin-left: 145px;
     width : 150px;
     height: 50px;;

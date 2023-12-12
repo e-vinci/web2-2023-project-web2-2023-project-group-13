@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const path = require('node:path');
 const { parse, serialize } = require('../utils/json');
 
-const jwtSecret = 'ilovemypizza!';
+const jwtSecret = 'catio';
 const lifetimeJwt = 24 * 60 * 60 * 1000; // in ms : 24 * 60 * 60 * 1000 = 24h
 
 const saltRounds = 10;
@@ -18,21 +18,21 @@ const defaultUsers = [
   },
 ];
 
-async function login(username, password) {
-  const userFound = readOneUserFromUsername(username);
+async function login(email, password) {
+  const userFound = readOneUserFromUsername(email);
   if (!userFound) return undefined;
 
-  const passwordMatch = await bcrypt.compare(password, userFound.password);
-  if (!passwordMatch) return undefined;
+  const passwordFound = await bcrypt.compare(password, userFound.password);
+  if (!passwordFound) return undefined;
 
   const token = jwt.sign(
-    { username }, // session data added to the payload (payload : part 2 of a JWT)
+    {email}, // session data added to the payload (payload : part 2 of a JWT)
     jwtSecret, // secret used for the signature (signature part 3 of a JWT)
     { expiresIn: lifetimeJwt }, // lifetime of the JWT (added to the JWT payload)
   );
 
   const authenticatedUser = {
-    username,
+    email,
     token,
   };
 
@@ -46,7 +46,7 @@ async function register(firstname,lastname,email, password) {
   await createOneUser(firstname, lastname, email, password);
 
   const token = jwt.sign(
-    { email }, // session data added to the payload (payload : part 2 of a JWT)
+    {email}, // session data added to the payload (payload : part 2 of a JWT)
     jwtSecret, // secret used for the signature (signature part 3 of a JWT)
     { expiresIn: lifetimeJwt }, // lifetime of the JWT (added to the JWT payload)
   );
@@ -59,9 +59,9 @@ async function register(firstname,lastname,email, password) {
   return authenticatedUser;
 }
 
-function readOneUserFromUsername(username) {
-  const users = parse(jsonDbPath, defaultUsers);
-  const indexOfUserFound = users.findIndex((user) => user.username === username);
+function readOneUserFromUsername(email) {
+  const users = parse(jsonDbPath,defaultUsers);
+  const indexOfUserFound = users.findIndex((user) => user.email === email);
   if (indexOfUserFound < 0) return undefined;
 
   return users[indexOfUserFound];
