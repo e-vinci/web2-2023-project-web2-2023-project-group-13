@@ -87,7 +87,7 @@ class GameScene extends Phaser.Scene {
     const platform = this.createPlatforms();
     this.player = this.createPlayer();
     this.scoreLabel = this.createScoreLabel(16, 16, 0);
-    this.timerLabel = this.createTimerLabel(16, 18, 0);
+    this.timerLabel = this.createTimerLabel(16, 50, 0);
 
     this.bushs = this.physics.add.group();
     this.physics.add.collider(this.player, platform);
@@ -100,6 +100,15 @@ class GameScene extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.fishs, this.collectFishs, null, this);
     this.physics.add.overlap(this.player, this.bushs, this.hitBush, null, this);
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    // Timer
+    this.timerEvent = this.time.addEvent({
+      delay: 1000, // 1 second
+      callback: this.updateTimer,
+      callbackScope: this,
+      loop: true
+    });
+
   }
  
   showInstructions() {
@@ -303,7 +312,7 @@ class GameScene extends Phaser.Scene {
   /* totalement a recréer tout ce qui est poisson */
 //  a revoir //
   createFishs() {
-      const randomX = Phaser.Math.Between(0, 2);
+      const randomX = Phaser.Math.Between(0, 1);
     const fishs = this.physics.add.group({
       key: FISH_KEY,
       repeat: randomX,
@@ -320,11 +329,6 @@ class GameScene extends Phaser.Scene {
     }, null, this);
  
     });
- 
-   
- 
- 
- 
     return fishs;
   }
  
@@ -363,7 +367,7 @@ hitBush fonctionne
 */
   createBush(){
     const bush1 = this.bushs.create(900, 550, BUSH_KEY);
-     bush1
+    bush1
       .setScale(0.2)
       .setOrigin(0,1)
       ;
@@ -378,9 +382,15 @@ hitBush fonctionne
   hitBush() {
     this.scene.pause();
     this.gameOver = true;
-    this.scoreLabel.setText(`GAME OVER  \nYour Score = ${this.scoreLabel.score}`);
   }
  
+  updateTimer(){
+    if(this.gameStarted){
+      this.timer+=1;
+      this.timerLabel.setTimer(this.timer);
+    }
+  }
+
 }
  
 export default GameScene;
