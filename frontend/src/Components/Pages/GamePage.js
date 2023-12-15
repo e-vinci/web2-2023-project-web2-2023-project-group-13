@@ -15,10 +15,10 @@ const GamePage = () => {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    fps : {
+    fps: {
       target: 70,
       forceSetTimeOut: true
-    },
+  },
     physics: {
       default: 'arcade',
       arcade: {

@@ -58,8 +58,8 @@ function renderContent(){
             <img id="skyImage" src="${sky}">
             <div id="textContainerGameOver">
                 <h1 class=gameOverFont>GAME OVER!</h1>
-                <p class="pGameOverFont"> Timer : ${localStorage.getItem('timer')} </p>
-                <p class="pGameOverFont"> FISH : ${localStorage.getItem('fish')}</p>
+                <p class="pGameOverFont"> Timer : ${localStorage.getItem('timer')}</p>
+                <p class="pGameOverFont"> Fish : ${localStorage.getItem('fish')} </p>
             </div>
             <div id="buttonContainer">
                 <button id="replayButton" class="gameoverButton">REPLAY</button>
