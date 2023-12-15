@@ -18,7 +18,7 @@ const UniversalFishPage = async () => {
      <h1>My High Scores By Fish</h1>
      ${table.map((score) => `
    <div class="timer">
-      ${score.fish} fish
+      ${score.email} ${score.fish} fish
    </div>
  `).join('')}
    </div>
