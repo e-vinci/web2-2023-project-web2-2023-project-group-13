@@ -16,7 +16,7 @@ const GamePage = () => {
     width: 800,
     height: 600,
     fps: {
-      target: 60,
+      target: 70,
       forceSetTimeOut: true
   },
     physics: {
