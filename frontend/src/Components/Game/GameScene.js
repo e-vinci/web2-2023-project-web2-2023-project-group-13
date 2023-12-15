@@ -395,14 +395,6 @@ hitBush fonctionne
     }
   }
 
-  updateTimer(){
-    if(this.gameStarted){
-      this.timer+=1;
-      this.timerLabel.setTimer(this.timer);
-      localStorage.setItem('timer',this.timer);
-    }
-  }
-
 }
  
 export default GameScene;
