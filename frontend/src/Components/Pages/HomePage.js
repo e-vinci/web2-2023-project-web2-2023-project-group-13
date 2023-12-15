@@ -159,7 +159,7 @@ function renderMenuConnected(){
         <br>
         <button id="scoresButton" class="retro-btn">HIGH SCORES</button>
         <br>
-        <button id="loginButton" class="retro-btn">LOG IN</button>
+        <button id="loginButton" class="retro-btn">ACCOUNT/LOG OUT</button>
         <br>
         <button id="gameOverButton" class="retro-btn">GAMEOVER</button>
       </div>

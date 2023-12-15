@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import ScoreLabel from './ScoreLabel';
 import gameConfig  from "./gameConfig";
+import TimerLabel from './TimerLabel';
 
 import skyAsset from '../../assets/sky2.jpg';
 import platformAsset from '../../assets/ground.png';
@@ -32,6 +33,8 @@ class GameScene extends Phaser.Scene {
     this.scoreLabel = undefined;
     this.fishs = undefined;
     this.gameOver = false;
+    this.timer = 0;
+    this.timerText = undefined;
     this.sky=undefined;
     this.ground1=undefined;
     this.ground2=undefined;
@@ -83,6 +86,7 @@ class GameScene extends Phaser.Scene {
     const platform = this.createPlatforms();
     this.player = this.createPlayer();
     this.scoreLabel = this.createScoreLabel(16, 16, 0);
+    this.timerLabel = this.createTimerLabel(16,50,0)
  
     this.bushs = this.physics.add.group();
     this.physics.add.collider(this.player, platform);
@@ -95,6 +99,13 @@ class GameScene extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.bushs, this.hitBush, null, this);
     this.cursors = this.input.keyboard.createCursorKeys();  
     
+    // Timer
+    this.timerEvent = this.time.addEvent({
+      delay: 1000, // 1 second
+      callback: this.updateTimer,
+      callbackScope: this,
+      loop: true
+    });
   }
 
   showInstructions() {
@@ -329,6 +340,7 @@ class GameScene extends Phaser.Scene {
   collectFishs( player, fish) {
     fish.disableBody(true, true);
     this.scoreLabel.add(1);
+    localStorage.setItem('fish',this.scoreLabel.score);
       // if (this.fishs.countActive(true) === 0) {
       //   this.fishs.children.iterate((child) => {
       //   child.enableBody(true, child.x, 0, true, true);
@@ -360,10 +372,26 @@ class GameScene extends Phaser.Scene {
     return this.bush1;
   }
 
+  createTimerLabel (x, y, timer) {
+    const style = { fontSize: '32px', fill: '#000'};
+    const label = new TimerLabel(this, x, y, timer, style);
+    console.log('timer:',label);
+    this.add.existing(label);
+    return label;
+  }
+
   hitBush() {
     this.scene.pause();
     this.gameOver = true;
     this.scoreLabel.setText(`GAME OVER  \nYour Score = ${this.scoreLabel.score}`);
+  }
+
+  updateTimer(){
+    if(this.gameStarted){
+      this.timer+=1;
+      this.timerLabel.setTimer(this.timer);
+      localStorage.setItem('timer',this.timer);
+    }
   }
 
 }

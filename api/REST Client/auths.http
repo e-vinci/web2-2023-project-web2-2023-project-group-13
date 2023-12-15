@@ -1,38 +1,52 @@
 @baseUrl = http://localhost:3000
 
 ### Try to login an unknow user
-POST {{baseUrl}}/auths/login
+POST {{baseUrl}}/users/loginUser
 Content-Type: application/json
 
 {
-    "username":"unknown",
-    "password":"admin"
+    "email":"j.d@student.vinci.be",
+    "password":"Jean12345"
 }
 
-### Login the default admin
-POST {{baseUrl}}/auths/login
+### Delete the user marc
+POST {{baseUrl}}/users/deleteUser
 Content-Type: application/json
 
 {
-    "username":"admin",
-    "password":"admin"
+    "email":"m.c@student.vinci.be",
 }
 
 
-### Create the manager user
-POST {{baseUrl}}/auths/register
+### Create a user
+POST {{baseUrl}}/users/addUser
 Content-Type: application/json
 
 {
-    "username":"manager",
-    "password":"manager"
+    "firstname":"marc",
+    "lastname":"du",
+    "email":"m.c@student.vinci.be",
+    "password":"Marc12345"
 }
 
-### Login the manager user
-POST {{baseUrl}}/auths/login
+### Get the best scores for fish 
+POST {{baseUrl}}/scores/getUserFish
 Content-Type: application/json
 
 {
-    "username":"manager",
-    "password":"manager"
+    "email":"j.d@student.vinci.be"
 }
+### Get the best scores for timer
+POST {{baseUrl}}/scores/getUserTimer
+Content-Type: application/json
+
+{
+    "email":"m.c@student.vinci.be"
+}
+### Get the best scores for timer
+GET {{baseUrl}}/scores/getFish
+Content-Type: application/json
+
+### Get the best scores for timer
+GET {{baseUrl}}/scores/getTimer
+Content-Type: application/json

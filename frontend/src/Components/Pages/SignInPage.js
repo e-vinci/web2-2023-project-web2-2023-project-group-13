@@ -12,19 +12,23 @@ import cloud04 from '../../assets/cloud4.png';
 const SignInPage = () => {
   clearPage();
   const main = document.querySelector('main');
+  // add the menu
   main.innerHTML += renderMenu();
   renderForm();
+  // getters
   const backButton = document.querySelector('#backButton');
+  // EventListener
   backButton?.addEventListener('click',redirectToHomePage);
 };
-
+// function to go back to the home page
 function redirectToHomePage(){
   Navigate('/')
 }
+// function to go back to the sign in page
 function redirectToSignInPage(){
   Navigate('/signIn')
 }
-
+// function to add the register form to the page
 function renderForm(){
   const main = document.querySelector('main');
   const form = document.createElement('form');
@@ -72,6 +76,7 @@ function renderForm(){
   form.addEventListener('submit', addUser);
 
 }
+// function to add the user into the json database
 async function addUser(e) {
   e.preventDefault();
   const firstname = document.querySelector('#firstname').value;
@@ -79,12 +84,13 @@ async function addUser(e) {
   const email = document.querySelector('#email').value;
   const password = document.querySelector('#password').value;
   const confirmPassword = document.querySelector('#confirmPassword').value;
-
+  // check if the password is long enough
   if (password.length <= 8){
       renderError("Le mot de passe n'est pas assez long");
       redirectToSignInPage();
     return;
   }
+  // check if the password is the same than the confirmPassword
   if (password !== confirmPassword){
     renderError("Le mot de passe n'est pas le même que celui de confirmation");
     redirectToSignInPage();
@@ -111,15 +117,18 @@ async function addUser(e) {
     return;
   };
   const newUser = await response.json();
-  localStorage.setItem('token', newUser.token);
+  // Set the item into the localStorage to take it later
+  localStorage.setItem('email', newUser.email);
   redirectToHomePage();
 }
+// function to render the page with an error
 function renderError(message){
   clearPage();
   const main = document.querySelector('main');
   main.innerHTML += renderMenuError(message);
   renderForm();
 }
+// function containing the menu with the error
 function renderMenuError(message){
       const menuError = `<div id="skyContainer">
       <img id="skyImage" src="${sky}">
@@ -153,7 +162,7 @@ function renderMenuError(message){
 
       return menuError;
   }
-  
+// function containing the menu  
 function renderMenu(){
   const menu = `
     <div id="skyContainer">

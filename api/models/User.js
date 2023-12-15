@@ -59,11 +59,38 @@ async function register(firstname,lastname,email, password) {
   return authenticatedUser;
 }
 
+async function deleteUser(email){
+  const userFound = readOneUserFromUsername(email);
+  console.log(userFound); 
+  if (userFound === undefined) return undefined;
+  console.log(email)
+  const userDeleted = await deleteAccount(email);
+  console.log(userDeleted);
+  return userDeleted;
+}
+
+async function deleteAccount(email){
+  const users = parse(jsonDbPath, defaultUsers);
+  const indexOfUserFound = users.findIndex((user) => user.email === email);
+
+  console.log('Index of user to delete:', indexOfUserFound);
+
+  if (indexOfUserFound !== -1) {
+    const accountDeleted = users[indexOfUserFound];
+    users.splice(indexOfUserFound, 1);
+    serialize(jsonDbPath, users);
+    console.log('User successfully deleted.');
+    return accountDeleted;
+  } else {
+    console.log('User not found for deletion:', email);
+    return null;
+  }
+}
+
 function readOneUserFromUsername(email) {
   const users = parse(jsonDbPath,defaultUsers);
   const indexOfUserFound = users.findIndex((user) => user.email === email);
   if (indexOfUserFound < 0) return undefined;
-
   return users[indexOfUserFound];
 }
 
@@ -100,4 +127,5 @@ module.exports = {
   login,
   register,
   readOneUserFromUsername,
+  deleteUser
 };
