@@ -23,6 +23,10 @@
   text-align:center;
   font-size: 40px;
 }
+.timer{
+  font-size: 30px;
+  text-align: center;
+}
 #backButtonContainer {
   position: absolute;
   top: 5%; 
@@ -32,7 +36,7 @@
 #logoutButtonContainer {
   position: absolute;
   top: 60%; 
-  left: 35%; 
+  left: 30%; 
   text-align: center;
 }
 #logoutButton{
@@ -59,6 +63,17 @@
   text-align: center;
   font-size: 30px;
   color : red;
+}
+#deleteButton{
+  position : absolute;
+  top : 59%;
+  left : 50%;
+  width : 225px;
+  height: 65px;;
+  font-size: 23px;
+  border : none;
+  background: url("../assets/Button.png");
+  background-size: 225px;
 }
 .buttonSubmit {
     margin-left: 145px;

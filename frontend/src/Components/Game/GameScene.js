@@ -36,6 +36,8 @@ class GameScene extends Phaser.Scene {
     this.timerText = undefined;
     this.fishs = undefined;
     this.gameOver = false;
+    this.timer = 0;
+    this.timerText = undefined;
     this.sky=undefined;
     this.ground1=undefined;
     this.ground2=undefined;

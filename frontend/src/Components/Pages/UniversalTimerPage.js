@@ -5,40 +5,65 @@ import Navigate from '../Router/Navigate';
 import timerGif from '../../assets/Timer.gif'
 import sky from '../../assets/sky.png';
 
-const UniversalTimerPage = () => {
+const UniversalTimerPage = async () => {
   clearPage();
  // get main
  const main = document.querySelector("main");
+ // get all scores sorted by time
+ const table = await getBestScoreByTime();
+
+ const content = `
+ <div id="waterBackGround">
+ <img id="waterImage" src="${sky}">
+ <div id="timergif">
+   <img id="timerImage" src="${timerGif}">
+ </div>
+ <div id="waterTextContainer">
+   <h1>My High Scores By Timer</h1>
+   ${table.map((score) => `
+ <div class="timer">
+
+    ${score.email} Time : ${score.timer}s
+ </div>
+`).join('')}
+ </div>
+
+ <div id="scorePagesButtonContainer">
+    <button id="backButton" class="retro-btn">GO BACK</button>
+ </div>
+</div>
+
+`;
+// display the table and the menu
+main.innerHTML += content;
  // getters
- main.innerHTML += renderContent();
  const backButton = document.querySelector('#backButton');
  // add EventListener
  backButton?.addEventListener('click',redirectToUniversalScoreMenu);
 };
+// function to get all the scores sorted by time
+async function getBestScoreByTime(){
+  const options = {
+    method: 'GET',
+    headers:{
+      'Content-Type': 'application/json',
+    },
+  };
+  try {
+  const response = await fetch('http://localhost:3000/scores/getTimer', options);
+  if (!response.ok) {
+    throw new Error(`Status: ${response.status}`);
+  }
 
-function renderContent(){
-  const content= `
-  <div id="waterBackGround">
-    <img id="waterImage" src="${sky}">
-    <div id="timergif">
-      <img id="timerImage" src="${timerGif}">
-    </div>
-    <div id="waterTextContainer">
-      <h1>High Scores By Timer</h1>
-      <p>Bastien: 600.00s</p>
-      <p>Wissal: 456.56s</p>
-      <p>Nisrine: 279.00s</p>
-      <p>Erica: 214.99s</p>
-      <p>travailler avec base de donnée pour récuperer le nom et le timer respectif.</p>
-    </div>
-    <div id="scorePagesButtonContainer">
-        <button id="backButton" class="retro-btn">GO BACK</button>
-    </div>
-  </div>
-  `;
-  return content;
+  const data = await response.json();
+
+  return data;
+} catch (error) {
+  console.error('Error user score:', error);
+  return null;
 }
-
+}
+// function to go back to the highscore page
 function redirectToUniversalScoreMenu(){
   Navigate('/highscore');
 }

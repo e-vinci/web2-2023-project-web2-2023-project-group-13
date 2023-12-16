@@ -13,15 +13,44 @@ const GameOverPage = () => {
   const main = document.querySelector('main');
   // add content
   main.innerHTML += renderContent();
+  if (localStorage.getItem('email') !== null){
+    addScore();
+  }
+  
   // get buttons
   const replayButton = document.querySelector('#replayButton');
   const scoreButton = document.querySelector('#scores');
   const HomeButton = document.querySelector('#homepage');
+
   // add EventListener
   replayButton?.addEventListener('click',redirectGamePage);
   scoreButton?.addEventListener('click',redirectHighScorePage);
   HomeButton?.addEventListener('click',redirectToHomePage);
 };
+async function addScore(){
+  const email = localStorage.getItem('email');
+  let fish = localStorage.getItem('fish');
+  let timer = localStorage.getItem('timer');
+  if (fish === null){
+    fish = 0;
+  }
+  if (timer === null){
+    timer = 0;
+  }
+  const options = {
+    method: 'POST',
+    body: JSON.stringify({
+      email,
+      fish,
+      timer
+    }),
+    headers:{
+      'Content-Type': 'application/json',
+    },
+  };
+  const response = await fetch('http://localhost:3000/scores/addScore', options);
+  console.log(response);
+}
 
 function renderContent(){
     const content = `
