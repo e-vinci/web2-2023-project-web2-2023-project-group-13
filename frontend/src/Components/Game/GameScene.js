@@ -92,7 +92,7 @@ class GameScene extends Phaser.Scene {
     this.bushs = this.physics.add.group();
     this.physics.add.collider(this.player, platform);
     this.physics.add.collider(this.bushs, platform);
-    this.fishs = this.createFishs();
+    this.fishs = this.physics.add.group();
 
 
     this.physics.add.collider(this.fishs,platform);
