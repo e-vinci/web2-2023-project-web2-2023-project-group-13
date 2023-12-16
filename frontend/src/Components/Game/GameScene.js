@@ -140,11 +140,12 @@ class GameScene extends Phaser.Scene {
  
     Instructions:
     - Press the up arrow key to make the cat jump.
+     Tip: Jump in advance to avoid obstacles more effectively.
     - Collect as many fish as possible to score points.
     - Avoid obstacles and try to stay alive as long as you can.
+    - There's a secret key to make the cat descend faster. Can you find it?
    
     Have a good time!
-   
     `;
  
     // Calculez la position du texte en fonction de la position du cadre
