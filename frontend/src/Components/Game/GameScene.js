@@ -70,7 +70,6 @@ class GameScene extends Phaser.Scene {
     this.timing = 0;
     this.timingFish = 0;
  
- 
     // Initialisation des images du ciel
     this.sky1 = this.add.image(0, 0, 'sky');
     this.sky1.setScale(1);// Échelle du ciel (taille d'origine)
@@ -339,11 +338,6 @@ class GameScene extends Phaser.Scene {
     fish.disableBody(true, true);
     this.scoreLabel.add(1);
     localStorage.setItem('fish',this.scoreLabel.score);
-      // if (this.fishs.countActive(true) === 0) {
-      //   this.fishs.children.iterate((child) => {
-      //   child.enableBody(true, child.x, 0, true, true);
-      // });  
-    // }
   }
  
  
