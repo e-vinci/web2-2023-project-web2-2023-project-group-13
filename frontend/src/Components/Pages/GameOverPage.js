@@ -52,7 +52,7 @@ async function addScore(){
       'Content-Type': 'application/json',
     },
   };
-  const response = await fetch('http://localhost:3000/scores/addScore', options);
+  const response = await fetch(`${process.env.API_BASE_URL}/scores/addScore`, options);
   console.log(response);
 }
 

@@ -110,7 +110,8 @@ async function addUser(e) {
       'Content-Type': 'application/json',
     },
   };
-  const response = await fetch('http://localhost:3000/users/addUser', options);
+  const response = await fetch(`${process.env.API_BASE_URL}/users/addUser`, options);
+
   
   if (response.status === 404) {
     renderError("Vous êtes déjà inscrit")
