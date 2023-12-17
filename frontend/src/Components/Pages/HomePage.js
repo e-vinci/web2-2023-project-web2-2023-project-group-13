@@ -20,7 +20,6 @@ const HomePage = () => {
   // add menu to main
   main.innerHTML += renderMenu();
   // get buttons
-  const gameOverButton = document.querySelector('#gameOverButton');
   const playButton = document.querySelector('#playButton');
   const highscoreButton = document.querySelector('#scoresButton');
   const loginButton = document.querySelector('#loginButton');
@@ -28,7 +27,6 @@ const HomePage = () => {
   const catioContainer = document.querySelector('#cationContainer');
   highscoreButton?.addEventListener('click',redirectToHighScore);
   loginButton?.addEventListener('click',redirectToLogin);
-  gameOverButton?.addEventListener('click',redirectToGameOver);
   signinButton?.addEventListener('click',redirectToSignIn);
   // add eventListener to the container(s)
   catioContainer?.addEventListener('mouseover',jumpAnimation);
@@ -46,10 +44,8 @@ const HomePage = () => {
   const highscoreButton = document.querySelector('#scoresButton');
   const loginButton = document.querySelector('#loginButton');
   const catioContainer = document.querySelector('#catioContainer');
-  const gameOverButton = document.querySelector('#gameOverButton')
   highscoreButton?.addEventListener('click',redirectToHighScore);
   loginButton?.addEventListener('click',redirectToLogin);
-  gameOverButton?.addEventListener('click',redirectToGameOver);
   // add eventListener to the container(s)
   catioContainer?.addEventListener('mouseover',jumpAnimation);
 
@@ -57,7 +53,6 @@ const HomePage = () => {
     showInstructions();
   });
 }
-  
  
    // Fonction pour afficher les instructions
    function showInstructions() {
@@ -65,7 +60,6 @@ const HomePage = () => {
      Navigate('/game');
    }
  };
-
 
 // Animation de la HomePage
 function jumpAnimation(){
@@ -115,8 +109,6 @@ function renderMenu(){
         <button id="loginButton" class="retro-btn">LOG IN</button>
         <br>
         <button id="signinButton" class="retro-btn">SIGN IN</button>
-        <br>
-        <button id="gameOverButton" class="retro-btn">GAMEOVER</button>
       </div>
     </div>
   `;
@@ -160,22 +152,11 @@ function renderMenuConnected(){
         <button id="scoresButton" class="retro-btn">HIGH SCORES</button>
         <br>
         <button id="loginButton" class="retro-btn">ACCOUNT/LOG OUT</button>
-        <br>
-        <button id="gameOverButton" class="retro-btn">GAMEOVER</button>
       </div>
     </div>
   `;
   return menu;
 }
-
-
-
-
-// EventListener for every button
-// function startGame(){
- // Navigate('/game');
-// }
-
 function redirectToLogin(){
   Navigate('/login');
 }
@@ -186,10 +167,6 @@ function redirectToHighScore(){
 
 function redirectToSignIn(){
   Navigate('/signIn');
-}
-
-function redirectToGameOver(){
-  Navigate('/gameOver');
 }
 
 export default HomePage;

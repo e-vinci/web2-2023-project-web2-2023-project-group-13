@@ -125,7 +125,8 @@ async function deleteUser(e){
       'Content-Type': 'application/json',
     },
   };
-  const response = await fetch('http://localhost:3000/users/deleteUser', options);
+  const response = await fetch(`${process.env.API_BASE_URL}/users/deleteUser`, options);
+
   console.log(response);
   localStorage.clear();
   redirectToHomePage();
@@ -146,7 +147,8 @@ async function loginUser(e){
       'Content-Type': 'application/json',
     },
   };
-  const response = await fetch('http://localhost:3000/users/loginUser', options);
+  const response = await fetch(`${process.env.API_BASE_URL}/users/loginUser`, options);
+
   
   if (response.status === 404) {
     renderError("L'adresse email ou le mot de passe n'est pas bon");

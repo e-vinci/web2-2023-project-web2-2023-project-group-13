@@ -44,7 +44,8 @@ async function getBestScoreByFish(){
     },
   };
   try {
-    const response = await fetch('http://localhost:3000/scores/getFish', options);
+    const response = await fetch(`${process.env.API_BASE_URL}/scores/getFish`, options);
+
     if (!response.ok) {
       throw new Error(`Status: ${response.status}`);
     }

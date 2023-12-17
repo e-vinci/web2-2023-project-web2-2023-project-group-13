@@ -7,6 +7,10 @@ import ground from '../../assets/longGround.png';
 import cryingCatio from '../../assets/cryingCatio.png';
 import bush from '../../assets/bush.png';
 
+let score= localStorage.getItem('fish');
+if(score===null){
+  score=0;
+}
 const GameOverPage = () => {
   clearPage();
   // get main
@@ -50,7 +54,7 @@ async function addScore(){
       'Content-Type': 'application/json',
     },
   };
-  const response = await fetch('http://localhost:3000/scores/addScore', options);
+  const response = await fetch(`${process.env.API_BASE_URL}/scores/addScore`, options);
   console.log(response);
 }
 
@@ -61,7 +65,7 @@ function renderContent(){
             <div id="textContainerGameOver">
                 <h1 class=gameOverFont>GAME OVER!</h1>
                 <p class="pGameOverFont"> Timer : ${localStorage.getItem('timer')}</p>
-                <p class="pGameOverFont"> Fish : ${localStorage.getItem('fish')} </p>
+                <p class="pGameOverFont"> Fish : ${score} </p>
             </div>
             <div id="buttonContainer">
                 <button id="replayButton" class="gameoverButton">REPLAY</button>
