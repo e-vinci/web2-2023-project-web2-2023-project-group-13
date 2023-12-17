@@ -23,7 +23,7 @@ const UniversalTimerPage = async () => {
    ${table.map((score) => `
  <div class="timer">
 
-    ${score.email} Time : ${score.timer}s
+    ${score.firstname} : Time : ${score.timer}s
  </div>
 `).join('')}
  </div>

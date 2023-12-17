@@ -6,6 +6,7 @@ const jsonDbPath = path.join(__dirname, '/../data/scores.json');
 defaultScore = [
     {
     id: 1,
+    firstname: 'Jean',
     email: 'j.d@student.vinci',
     fish: 1,
     timer: 3
@@ -13,10 +14,11 @@ defaultScore = [
 ]
 
 
-async function addScore(email, fish, timer){
+async function addScore(email, firstname, fish, timer){
     const score = {
         getNextId,
         email,
+        firstname,
         fish,
         timer
     }
@@ -33,7 +35,7 @@ async function getUserScoreByFish(email){
     const userScores = [];
     scores.forEach((score) => {
         const scoreUserFish = {
-            email: score.email,
+            firstname: score.firstname,
             fish: score.fish
         }
         if (score.email === email){
@@ -43,6 +45,9 @@ async function getUserScoreByFish(email){
         }
     });
     userScores.sort((a, b) => b.fish-a.fish);
+    while (userScores.length > 10){
+        userScores.pop();
+    }
     console.log(userScores);
     return userScores;
 }
@@ -51,6 +56,7 @@ async function getUserScoreByTime(emailUser){
     const userScores = [];
     scores.forEach((score) => {
         const scoreUserTimer = {
+            firstname: score.firstname,
             email: score.email,
             timer: score.timer
         }
@@ -59,6 +65,9 @@ async function getUserScoreByTime(emailUser){
         }
     });
     userScores.sort((a, b) => b.timer-a.timer);
+    while (userScores.length > 10){
+        userScores.pop();
+    }
     console.log(userScores);
     return userScores;
 }
@@ -67,7 +76,7 @@ async function getBestScoreByFish(){
     const userScores = [];
     scores.forEach((score) => {
         const scoreWithFish = {
-            email: score.email,
+            firstname: score.firstname,
             fish: score.fish
         }
         if (score.fish > 0){
@@ -76,6 +85,9 @@ async function getBestScoreByFish(){
     });
     userScores.sort((a, b) => b.fish-a.fish);
     console.log(userScores);
+    while (userScores.length > 10){
+        userScores.pop();
+    }
     scores.reverse();
     return userScores;
 }
@@ -84,7 +96,7 @@ async function getBestScoreByTime(){
     const userScores = [];
     scores.forEach((score) => {
         const scoreWithTimer = {
-            email: score.email,
+            firstname: score.firstname,
             timer: score.timer
         }
         if(score.timer > 0){
@@ -92,6 +104,9 @@ async function getBestScoreByTime(){
         }
     });
     userScores.sort((a, b) => b.timer-a.timer);
+    while (userScores.length > 10){
+        userScores.pop();
+    }
     console.log(userScores);
     return userScores;
 }

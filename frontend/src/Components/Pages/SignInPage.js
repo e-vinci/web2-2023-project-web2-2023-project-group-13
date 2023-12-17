@@ -119,6 +119,7 @@ async function addUser(e) {
   const newUser = await response.json();
   // Set the item into the localStorage to take it later
   localStorage.setItem('email', newUser.email);
+  localStorage.setItem('firstname', newUser.firstname);
   redirectToHomePage();
 }
 // function to render the page with an error

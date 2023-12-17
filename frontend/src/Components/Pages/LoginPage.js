@@ -157,6 +157,7 @@ async function loginUser(e){
 
   console.log('User : ', newUser);
   localStorage.setItem('email', newUser.email);
+  localStorage.setItem('firstname', newUser.firstname);
   redirectToHomePage();
 } 
 // function for the menu log in page

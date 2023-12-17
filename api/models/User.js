@@ -18,12 +18,13 @@ const defaultUsers = [
   },
 ];
 
-async function login(email, password) {
+async function login(email,password,) {
   const userFound = readOneUserFromUsername(email);
   if (!userFound) return undefined;
 
   const passwordFound = await bcrypt.compare(password, userFound.password);
   if (!passwordFound) return undefined;
+  const firstname = userFound.firstname;
 
   const token = jwt.sign(
     {email}, // session data added to the payload (payload : part 2 of a JWT)
@@ -33,6 +34,7 @@ async function login(email, password) {
 
   const authenticatedUser = {
     email,
+    firstname,
     token,
   };
 
@@ -53,6 +55,7 @@ async function register(firstname,lastname,email, password) {
 
   const authenticatedUser = {
     email,
+    firstname,
     token,
   };
 

@@ -29,6 +29,7 @@ const GameOverPage = () => {
 };
 async function addScore(){
   const email = localStorage.getItem('email');
+  const firstname = localStorage.getItem('firstname');
   let fish = localStorage.getItem('fish');
   let timer = localStorage.getItem('timer');
   if (fish === null){
@@ -41,6 +42,7 @@ async function addScore(){
     method: 'POST',
     body: JSON.stringify({
       email,
+      firstname,
       fish,
       timer
     }),

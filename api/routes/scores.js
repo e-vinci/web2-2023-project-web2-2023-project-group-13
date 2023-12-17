@@ -53,14 +53,16 @@ router.get('/getTimer', async (req,res) => {
 // function to add a score from an user into the json database
 router.post('/addScore', async (req,res) => {
     const email = req?.body?.email?.length !== 0 ? req.body.email : undefined;
+    const firstname = req?.body?.firstname?.length !== 0 ? req.body.firstname : undefined;
     const fish = req?.body?.fish?.length !== 0 ? req.body.fish : undefined;
     const timer = req?.body?.timer?.length !== 0 ? req.body.timer : undefined;
   
     console.log(email);
+    console.log(firstname);
     console.log(fish);
     console.log(timer);
   
-    const score = await addScore(email, fish, timer);
+    const score = await addScore(email,firstname, fish, timer);
     if (score === undefined){
       return res.status(404).json({ error: "erreur lors de l'ajout du score"});
     }
