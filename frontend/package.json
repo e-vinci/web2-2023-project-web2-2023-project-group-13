@@ -1,14 +1,14 @@
 {
-  "name": "js-phaser-boilerplate",
+  "name": "Catio",
   "version": "1.0.0",
-  "description": "myJScourse's modern frontend boilerplate to build a phaser game",
+  "description": "'Catio' is a Phaser game developed as part of myJScourse. In this game, you control a cat that loves to jump and catch fish.",
   "scripts": {
     "deploy": "npm run build && gh-pages -d dist",
     "dev": "webpack --mode development --config webpack.config.base.js && cp dist/index.html dist/404.html",
     "build": "webpack --mode production --config webpack.config.prod.js && cp dist/index.html dist/404.html",
     "start": "webpack serve --mode development --config webpack.config.base.js"
   },
-  "author": "e-baron",
+  "author": "Nisrine Azmar, Barros Erica, Bouayyad Wissal, Topet Bastien",
   "license": "CC-BY-SA-4.0",
   "devDependencies": {
     "@babel/core": "^7.14.3",
@@ -28,11 +28,12 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
-    "@popperjs/core": "^2.9.2",
-    "bootstrap": "^5.0.1",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.2",
     "clean-webpack-plugin": "^4.0.0",
-    "phaser": "^3.55.2",
     "gh-pages": "^4.0.0",
+    "node-fetch": "^3.3.2",
+    "phaser": "^3.55.2",
     "terser-webpack-plugin": "^5.3.6",
     "webpack-merge": "^5.8.0"
   }
